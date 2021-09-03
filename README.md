@@ -1,6 +1,5 @@
 # Principles of Programming Language - HCMUT
-<h2>Môn Nguyên lý ngôn ngữ lập trình </h2><br/>
-Trường Đại học Bách Khoa HCM. <br/>
+<h2>Môn Nguyên lý ngôn ngữ lập trình Trường Đại học Bách Khoa HCM. </h2>
 Lý thuyết + hướng dẫn sử dụng python và antlr.8 <br/>
 Tổng hợp quiz + ProgramingCode môn PPL<br/>
 Assignment: Python + antlr4.8
