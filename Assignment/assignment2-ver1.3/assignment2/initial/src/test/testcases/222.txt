@@ -1,0 +1,6 @@
+
+            Function foo()
+            {
+                Let x= [12, True, "abc"];
+            }
+        

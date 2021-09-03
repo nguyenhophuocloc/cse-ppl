@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[[VarDecl(variable=Id(name='x'), varDimen=None, typ=NoneType(), varInit=ArrayLiteral(value=[NumberLiteral(value=12.0), BooleanLiteral(value=True), StringLiteral(value='abc')]))]])])

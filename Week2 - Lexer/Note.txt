@@ -1,0 +1,65 @@
+Week 2: Từ vựng
+Từ vựng Lexer:
+	từng từ vựng tạo thành program
+	fragment là R.E được 1 R.E khác sử dụng và sẽ ko được bắt thành 1 TOKEN riêng lẻ.
+Cú pháp Parser:
+	program:
+--------
+Lexer muốn dùng Lexer khác thì lexer khác khai báo là fragment.
+Như là phân tách (extra) từng chữ, phân loại từ, kiểm tra chính tả...
+Xác định lexemes dựa vào tách sr - > substr -> trả về: tokens
+Bỏ qua WS
+Ghi lại vị trí token.
+Lexer: 100 -> tokens: DIGIT
+Comment ko trả về TOKENS
+--------
+DFA:
+- State dùng ko ko dùng lại: vd vào 0 thì phải ra 1.
+- Đúng 1 phép chuyển khỏi trạng thái.
+- Chỉ chấp nhận 1 máy (lexer)
+- Chi phí cao.
+- 1 end.
+N.F.A:
+- Có thể đầu vào là a, và next state cũng là a. VD: a->Q0->a->Q1
+- Chấp nhận empty state.
+- Giúp đơn giản hóa automata. (bài tập đơn giản automata)
+- Mỗi NFA ->DFA.
+- Nhiều máy.
+- Rẻ, dễ.
+=> DFA là con của NFA.
+------------
+R.E:
+(): grouping.
+a | b: a or b
+a*: 0 hoặc more.
+ab: a -> b
+a+: 1 or more.
+a?: 0 or 1.
+[xyz]: x or y or z
+[x-y]: all x->y
+[^x-y]: all char all other than [x-y]
+.: match all
+------------
+ANTLR:
+R.E
+------------
+Scala:
+Lexer:
+Khai báo biến: val x
+val x = new Regex("[0-9]+")
+val.findFirstMatchIn(str)
+
+Parser:
+new Parser[T]
+p1~p2: p1 sau là p2
+p1|p2: or
+p1.?: p1 or not
+p1.*: p1 từ 0 đến more
+p1 ^^f: kết hợp function
+p1 ^^^ T: thay đổi kết quả success thành giá trị chỉ định.
+.r: string convert to R.E
+-----------
+SUM:
+Phân tích Lexer là tách thành quy trình nhỏ.
+Tạo R.E từ F.A
+Tách ra mà có nghĩa thì là TOKENS: -24 -> - 24: 2 tokens

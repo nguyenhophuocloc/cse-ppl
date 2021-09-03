@@ -1,0 +1,7 @@
+
+            Function foo()
+            {
+                Let x, y;
+                Let z[123][456] = 1.234e-789;
+            }
+        

@@ -1,0 +1,12 @@
+
+            Function foo()
+            {
+                While (True) {
+                    While (False) {
+                        While (xyz) {
+                            Call(func,[]);
+                        }
+                    }
+                }
+            }
+        

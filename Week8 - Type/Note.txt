@@ -1,0 +1,404 @@
+Data Type
+Data type:
+- Tập hợp các giá trị đồng nhất và thao tác trên tập hợp này.
+Used:
+- Tổ chức khái niệm.
+- Phát hiện lỗi.
+- Hiện thực.
+Type System:
+- Tập hợp các type được xác định trước.
+- Cơ chế xác định type mới.
+- Cơ chế DK:
+	+ Equivalence
+	+ Compatibility
+	+ Inference
+- Đặc tả type constraints are statically or dynamically checked.
+---------
+Scalar Types:
+- atomic
+- được sử dụng để compose another types.
+- sometimes supported directly by hardware
+- booleans, characters, integers, floating-point,
+fixed-point, complex, void, enumerations, intervals,...
+*Integer:
+- byte, int, short, long.
+- unsigned.
+- Support hardware: a string of bits.
+- bù 2.
+*Floating-Point:
+- mô hình số thực (gần đúng)
+- support at least two floating-point types.
+- Precision and range
+- IEEE Floating-Point Standard 754
+*Decimal:
+- For business applications (money).
+- Store a fixed number of decimal digits
+- Advantage: accuracy
+- Disadvantage: limited range, wastes memory
+*Boolean: 0 1
+- Could be implemented as bits, but often as bytes
+*Character:
+- Stored as numeric codings
+- ASCII
+- 16-bit: Unicode
+*User-Defined Ordinal Types:
+- Type is one in which the range of possible
+values can be easily associated with the set of positive integers.
+VD: integer, char, boolean
+*Enumeration Types:
+- All possible values, which are named constants, are
+provided in the definition.
+- Định danh trở thành 1 type.
+VD:
+enum days {Mon, Tue, Wed, Thu, Fri, Sat, Sun};
+days myDay = Mon, yourDay = Tue;
+*Subrange Type:
+- 1 dãy liền kề: type pos= 0.. MAXINT;
+- Subrange types behave as their parent types;
+can be used as for variables and array indices
+- Với code inserted sẽ hạn chế assignment biến con.
+*Composite Types:
+- Kiểu hỗn hợp từng tp có thể khác type nhau, thao tác được trên type này.
+*Array Types:
+- Element đồng nhất.
+- element được định danh bởi bị trí.
+array_name(index expression list) -> an element.
+-------------------
+Subscript Binding and Array Categories:
+*Static:
+static int x[10];
+*Fixed Stack-dynamic:
+int x[10]; //inside function.
+*Stack-dynamic:
+cin>>n;
+int x[n];
+*Fixed Heap-dynamic:
+int [] x = new int[10];
+*Heap-dynamic:
+cin>>n;
+int [] x= new int [n]
+*Tóm lại cách gọi mảng:
+- stack/heap+dynamic: xác định bình thường (new int vs others)
+- phần tử n được gán lúc nhập -> ko có fixed.
+---------------
+Array Initialization
+- C, C++, Java, C# example
+int list [] = {4, 5, 7, 83}
+- Character strings in C and C++
+char name [] = "freddie";
+- Arrays of strings in C and C++
+char *names [] = {"Bob", "Jake", "Joe"};
+- Java initialization of String objects
+String[] names = {"Bob", "Jake", "Joe"};
+-------------
+Rectangular and Jagged Arrays:
+myArray[3][7]:
+rectangular: 3x7	 jagged: 3x???
+------------
+Slices:
+- A slice is some substructure of an array (cơ chế tham chiếu).
+- Slices are only useful in languages that have array operations.
+VD:
+mat = [[1, 2, 3],[4, 5, 6],[7, 8, 9]]
+mat[1]
+------------------------
+Implementation of Arrays
+- Truy cập function maps subscript tới 1 địa chỉ mảng.
+- Dãy ô nhớ liền kề.
+address(list[k])= address(list[lower_bound])+((k-lower_bound)*element_size)
+------------
+Row-major:
+a[0,0], a[0,1], a[0,2], a[1,0], a[1,1], a[1,2]
+Coulumn-major:
+a[0,0], a[1,0], a[2,0], a[0,1], a[1,1], a[2,1]
+-------------
+Location (a[i,j])
+= alapha + (((i-row_lb)*n) + (j-col_lb))*E
+- alpha is address of a[row_lb,col_bl]
+--------------
+Associative Arrays
+Mảng kết hợp là một tập hợp không có thứ tự của
+các phần tử dữ liệu được lập chỉ mục bởi một số bằng
+các giá trị được gọi là khóa
+VD:
+dt = [("name","John");("age","28");("address","1 John st.")]
+dt["name"] ) "John"
+--------
+StringType
+- Static: String length is fixed at compiling time
+- Limited Dynamic: String length may be changed but
+less than a limit
+- Dynamic: String length may be changed without any
+limit
+-------
+Records:
+Tương tự Struct (use Ada)
+type Shape is (Circle, Triangle, Rectangle); //enum
+type Emp_Name_Type is record
+	First: String (1..20);
+	Mid: String (1..10);
+	Last: String (1..20);
+end record;
+type Emp_Rec_Type is record
+	Emp_Name: Emp_Name_Type;
+	Hourly_Rate: Float;
+end record;
+Dùng:
+Emp_Rec: Emp_Rec_Type;
+----------------
+Data Alignment
+b-byte aligned: A b-byte aligned object has an address that is a multiple
+of b bytes.
+----------
+Padding:
+Tùy vào môi trường 4byte hay 8 byte.
+VD: 32bit - 4bytes
+struct padding {
+    char c1;
+    int i1;
+    char c2;
+    short s1;
+};
+siz=4+4+4=12
+struct padding {
+    int i1;
+    char c1;    
+    char c2;
+    short s1;
+};
+size=4+4=8
+Lấy là lấy nguyên ô, ko xé lẻ.
+-------------
+Union Type:
+- Liên hợp là một kiểu có các biến được phép lưu trữ các giá trị kiểu khác nhau 
+tại các thời điểm khác nhau trong chấp hành (case...when)
+- Size của when là lấy case lớn nhất.
+------------
+Set types:
+x: set of 1..10;
+y: set of char;
+- Đại diện cho khái niệm tập hợp.
+- Các toán tử: giao, hợp,...
+- imple bằng chuỗi bit hoặc bảng băm.
+------------
+Pointer types:
+int *prt;
+- Thao tác: assigment và dereferencing.
+	+Assignment: gán giá trị con trỏ đến 1 địa chỉ.
+	int *p,*q;
+	p=q;
+	+Dereferencing: trả về giá trị được lưu tại vị trí represented by the
+	pointer's value.
+	j=*ptr
+	sets j to the value located at prt
+Problem:
+- Dangling pointers.
+- Lost heap-dynamic variable (garbage)
+Con trỏ có thể trỏ vào bất kỳ biến nào bất kể khi nào
+nó đã được cấp phát.
+--------------------
+Reference Types
+int A;
+int &rA=A;
+A=1;
+cout << rA << endl ;
+rA ++;
+cout << A << endl;
+- Pointers refer to an address, references refer to object or value
+cannot reseated
+cannot be null
+cannot be uninitialize
+---------------------
+Recursive Type
+
+---------------------
+Type Expression:
+- A basic type is type expression: boolean, char, integer, flaot, void, subrange.
+- A type name is a type expression.
+- A type constructor applied to type expressions is a type expression.
+Arrays: array(I,T) where I: index type, T: element type
+Products: T1xT2
+Records: record((name1xT1)x(name2xT2)x..)
+Pointers: pointer(T)
+Fuctions: T1->T2
+- A type variable is a type expression.
+VD:
+int => int
+typedef int siso; => siso
+int t[10]; => array(0..9,int)
+int foo(int a, float b) => (int x float) -> int
+struct int a; int b => record((a x int)x(b x int))
+int *p => pointer(int)
+template <class T> 
+struct vd T a; T b[3];
+=> record((a x T) x (b x array(0..2,T))
+------------------------
+Type Checking:
+là hoạt động chắc chắn chương trình nhận luật type system.
+- Static type checking: diễn ra compiling time. Applied for static type binding
+language.
+- Dynamic type checking: running time. Applied for:
+	+ dynamic type binding languages.
+	+ static type bing languages (cannot compiling time)
+-----------------------
+Type Inference
+Khả năng của compiler to deduce type infor of program unit.
+VD:
+def add(x:Int)= x + 1
+Return type of func add is inferred to be Int
+PP:
+- Gán type to leaf nodes in AST>
+- Tạo type ràng buộc mỗi internal node in AST.
+- Resolve ràng buộc.
+---------------------
+Type Equivalence
+Tương đương.
+- Tên (cùng float)
+- Cấu trúc
+type A = record
+field1: integer ;
+field2: real ;
+end
+type B = record
+field1: integer ;
+field2: real ;
+end
+---------------------
+Type Compatibility
+Type T is compatible with type S nếu giá trị của T chứa S.
+VD: int và float
+- T compatible with type S.
+	+ tương đương.
+	+ T form a subset of value S.
+	+ Thao tác trên S => trên T.
+	+ Giá trị T in a canonical fashion to value S 
+	+ Values of T can transform to some values of S.
+--------------------
+Type Conversion
+- Implicit conversion - coercion
+- Explicit conversion - cast
+---------------------
+Polymorphism
+Monomorphic: any language object has a unique type
+Polymorphic: the same object can have more than
+one type
+VD:
++: int x int -> int or float x float -> float
+Kind:
+- Ad hoc polymorphism - Overloading
+- Universal Polymorphism
+	+ Parametric polymorphism (swap(T& x,T& y))
+	+ Subtyping polymorphism (in OOP)
+---------------------
+BKel:
+*Biểu diễn số âm:
+- Dec to Bin
+- Bù 1: đảo 0->1 và ngược lại.
+- Bù 2: Bù 1 + 1:
+VD:
+5 -> 0101 -> 1010 -> 1010 + 1=1011
+Lưu ý: hệ 8bit: xxxx xxxx
+
+*IEEE 754:
+- độ chính xác đơn:
+32 bit – 1 bit dấu – 8 bit mũ – 23 bit giá trị phần lẻ
+- độ chính xác kép:
+64 bit – 1 bit dấu – 11 bit mũ – 52 bit giá trị phần lẻ
+
+VD: -3.56125
+B1: Phần nguyên -> nhị phân (freestyle)
+3 đổi thành 11
+B2: Phần lẻ -> nhị phân (23bit)
+0.56125
+0.56125*2^23= 4708106
+Lấy 4708106 - 2^n for n in range[22,0]
+Nếu:
+	trừ 2^n mà <0 thì bỏ qua -> bit ở ô đó là 0
+	trừ 2^n >0= thì dồn vào trừ tiếp -> bit đó là 1
+Kết quả:
+4708106 – 222 = 513802 ( kết quả > 0, tiếp tục thực hiện)
+4708106 – 222 – 221 = -1583350 (kết quả < 0, bỏ qua)
+4708106 – 222 – 220 = -534774 (kết quả < 0, bỏ qua)
+4708106 – 222 – 219 = -10486 (kết quả < 0, bỏ qua)
+4708106 – 222 – 218 = 251658 (kết quả > 0, tiếp tục thực hiện)
+4708106 – 222 – 218 – 217 = 120586 (kết quả > 0, tiếp tục thực hiện)
+.....
+=>
+4708106 – 2^22– 2^18– 2^17– 2^16– 2^15– 2^14– 2^12– 2^10– 2^9– 2^8– 2^3– 2^1
+Vậy:
+0.10001111101011100001010 (bit đầu là 22 cuối là 0)
+B3: Chuyển phần nguyên và phần lẻ đã được tính thành dạng IEEE 754
+Gộp:
+11.10001111101011100001010
+Chuẩn hóa (còn 1 nguyên):
+1.110001111101011100001010 x 2^1
+Tính 8 bit mũ: số thiên vị (127) + số mũ bình thường (1)
+127+1=10000000 (128)
+Số âm nên sign là 1
+Drop phần nguyên ở chuẩn hóa:
+1 10000000 11000111110101110000101
+
+*Dạng: Tính địa chỉ:
+int x[10];
+element size=4
+x[5] địa chỉ ?
+address x: 1000
+Giải: 1000+(5-0)*4=1020
+------
+2 chiều.
+int x[5][7]; //lb=0
+    x[3][4]
+x[m][n]
+1000+ ((3-0)*7+(4-0))*4=1100
+-------
+3 chiều:
+int x[4][6][5];
+    x[2][3][4];
+Giải: 1000+ ( ( (2-0)*6) + (4-0) )*5 ) +(3-0) )*4=1332
+--------
+Tính size (without padding) của union:
+- Tính từ tham số.
+- Gặp switch...when thì chọn case có size lớn nhất.
+---------
+x: set of 10..73
+Size: from 10 to 73: 64 bits-> 8 bytes
+---------------
+Suy diễn kiểu:
+x: array [1..10] of record
+     a: array [5..10] of integer;
+     b: record
+          c: real;
+          d: array[1..3] of real;
+   end;
+end;
+Giải:
+array(1..10,record((a*array(5..10,integer)*(b*record((c*real)*(d*array(1..3,real)))))))
+
+
+def foo(x,f) = f(f(x))
+(T1*(T1->T1)) -> T1
+
+-----------------------
+Quiz:
+Công thức tính số thiên vị
+VD:
+single IEEE: 8 bit exponet
+2^7-1=127
+floating number: 3 bit expont:
+2^2-1=3
+
+t: array[1..10] of ^real
+array(1..10,pointer(real))
+-------------------------
+Xử lý tham chiếu treo:
+Tombstone:
+- When heap-dynamic variable de-allocated,
+tombstone remains but set to null. (when vs null -> error)
+- khi thực hiện tác vụ dereference, để đọc được giá trị
+của đối tượng được trỏ đến, cần thực hiện đến hai phép đọc địa chỉ
+Lock-and-Keys:
+- Pointer values are represented as (key, address) pairs, key integer
+- đối tượng được trỏ đến và con trỏ đều cần thêm một thành phần phụ (lock value).
+- khi thực hiện tác vụ xoá (delete), một thành phần của đối tượng được trỏ đến bị thay đổi
+- the key of its pointer is modified to hold a value different from the variable's cell
+- From then on, any attempt to dereference the pointer can be flagged as an error.

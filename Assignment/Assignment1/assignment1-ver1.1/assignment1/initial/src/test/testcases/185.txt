@@ -1,0 +1,1 @@
+Call(foo,[2 + x, 4. /. y]);**foo call** goo ();

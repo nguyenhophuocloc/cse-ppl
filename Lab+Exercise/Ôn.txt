@@ -1,0 +1,81 @@
+Type:
+def(x,y,z)=y(z(x)))
+(T1*(T2->T3)*(T1->T2))->T3
+
+Kiểu nhận khác với kiểu vào:
+y(x): T1->T2
+z(y): T2-> T3
+-------------------------------------
+JVM:
+new A(2,3)
+=>
+new A
+dup
+iconst_2
+iconst_3
+invovespecial A/init(II)V
+
+b=a[3]
+aload_2
+iconst_3
+iaload
+istore_3
+
+----------------------------
+do stmt while exp
+Giải:
+emitLABEL(label0)
+visit(stmt)
+visit(exp)
+emitIFTRUE(label0)
+
+for exp1;exp2;exp3
+	stmt
+
+visit(exp1)
+emitLABEL(label0):
+visit(exp2)
+emitIFFALSE(label1)
+visit(stmt)
+visit(exp3)
+emitGOTO(Label0)
+emitLABEL(label1)
+
+while(exp) stmt
+
+emitLabel(label0)
+visit(exp)
+emitIFFALSE(label1)
+visit(stmt)
+emitGOTO(label0)
+emitLabel(label1)
+--------------------------------------
+Pass:
+Pass by value, value-result, refence: tính toán ngay khi truyền
+Pass by name: ngâm
+Pass by name, ref: thay đổi trước khi trả về
+As a result: ko có thông số thực
+-------------------------------------
+Call:
+Simple:
+return: . Nhờ địa chỉ quay trở về đã được ghi vào bản hoạt động của chương trình con bởi sự thực thi của một lệnh khác
+ko đệ quy
+assembly
+Exception: 
+tách mạch logic
+OOP
+Event
+ko tường minh
+
+Schecduled:
+Đúng mốc thời gian
+
+Task: OS: race condition....
+song song
+
+Cộng hành:
+nhiều entry, resume
+
+
+
+

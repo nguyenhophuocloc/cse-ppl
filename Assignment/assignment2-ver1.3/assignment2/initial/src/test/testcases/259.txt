@@ -1,0 +1,8 @@
+
+            Function foo()
+            {
+                While (True){
+                    x = False;
+                }
+            }
+        

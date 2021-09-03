@@ -1,0 +1,9 @@
+
+            Function foo()
+            {
+                Let a:Number=0;
+                For a In [1,2,3]{
+                    x=a;
+                }
+            }
+        

@@ -1,0 +1,53 @@
+Intro
+Language Characteristics:
+- Simplicity: dễ học
+- Orthogonality: thay đổi 1tp ko ảnh hưởng tp khác
+- Support of abstraction (Control, Data):
+	+Cơ chế: if/else...
+	+Dữ liệu: "địa chỉ"
+- Safety: khi thao tác sai sót...
+-------------
+Đánh giá
+- Readability: python,(algol vi phạm)
+- Writability: viết trên 1 hàng...
+- Reliability: tính an toàn cao (cho phép khai báo ngoài phạm vi)
+- Cost: chi phí thực thi, con người (2 loại type Java)
+-------------
+Mâu thuẫn:
+Readability vs Cost
+Readability vs Writability
+Writability vs Reliability
+---------------
+Thiết kế ngôn ngữ:
+- Kiến trúc máy tính: Von Neumann: lập trình thủ tục (lệnh)
+- Phương pháp lập trình:
+	+ Dòng lệnh (thủ tục): How
+	+ Khai báo: What
+	+ OOP
+	+.........
+----------------
+Implementation:
+- Compilation:
+Programs are entirely translated into machine
+language and then executed
+- Pure Interpretation:
+Programs are translated and executed line-by-line
+- Hybrid Implementation Systems:
+A compromise between compilers and pure
+interpreters
+Just-in-time Compiler:
+- A compiler inside an interpreter compiles just hot
+methods (sinh mã trung gian) (là inter nhưng muốn xử lý lệnh lặp)
+*Nếu lệnh trùng lặp: compiler, ngược lại: inter
+---------------
+Source -> Compiler -> Exe (Data) -> Res
+Source + Data -> Interpreter -> Res
+Source -> Compier -> Interpreter (Data) -> Res
+--------------
+Related Programs:
+- Preprocessor: thực thi tiền xử lý
+- Assembler: đổi qua mã máy 
+- Linker: liên kết các tập mã code (tạo ra các obj)
+- Loader: load lên mem (combine obj -> exe)
+- Debugger: lỗi
+- Editor

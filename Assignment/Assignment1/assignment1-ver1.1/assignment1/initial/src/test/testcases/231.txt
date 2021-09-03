@@ -1,0 +1,12 @@
+
+            Function foo()
+            {
+                If (False) 
+                {
+                    Call(str_to_float,["abc"]);
+                }
+                Elif (True) {
+                    z = "xyz";
+                }
+            }
+        

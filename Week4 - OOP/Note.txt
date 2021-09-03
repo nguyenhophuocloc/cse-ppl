@@ -1,0 +1,89 @@
+OOP
+Program là tập hợp các obj.
+Public interface, hidden implementation.
+Obj classfied dựa trên hành vi.
+Obj đại diện real-world obj hoặc thực thể dịch vụ của program.
+Obj có thể tái use.
+--------
+4 tính chất
+*Trừu tượng:
+*Đóng gói:
+	Att + operations in 1 unit.
+	Compiled riêng.
+Ẩn thông tin:
+	Kiểm soát access.
+	Gia tăng tin cậy.
+-> data đầu vào là 1 interface đầu ra 1 interface, còn những operation bên trong
+ko cần care.
+VD: pop(stack) -> ko cần care implement
+*Kế thừa:
+1 vài class con (subclass)
+1/many class cha (superclass)
+Con có thể truy cập ko-private của cha.
+Con: add its own mem or override.
+Single vs mul inhertitace.
+Tăng chi phí OOP.
+-Kim cương (mul inher):
+	D con của B và C, B và C con A -> D chịu ảnh hưởng version nào (B hay C)
+Class vs Obj:
+-Class: định nghĩa các thuộc tính trừu tượng
+	att or properties
+	behaviors or method or features
+Dog: fur, bark
+-Obj: là 1 ví dụ của class
+Lassie is Dog
+Method vs Message:
+Method: mô tả hành vi obj: dog can bark.
+Message: thực thi hành vi với 1 obj: Lassie barks.
+*Đa hình:
+Các obj phản hồi cùng 1 thông diệp bằng nhiều cách.
+p.draw(): circle draw() or Point draw()
+Cha được gán bởi con.
+Cha= new Con;
+*Dynamic binding
+*Other concepts:
+2 var: Class variable vs Instance varialbe
+2 method: Class methods vs Instance methods
+Class vs obj
+--------------
+Scala:
+Class:
+	class
+	abstract class: ko tạo đối tượng từ lớp này
+	trait: "interface", có thể đặt vào behavior được imple
+	case class: class ko cần new.
+Obj:
+	new <class name>
+	<case class name>
+	object
+VD:
+class Rational(n: Int, d: Int){}
+private val g= ....;
+private def gcd(): Int = ...
+Constuctor: def this(n: Int)= this(n,1)
+override def toString = number +"/"+denom
+def + (that: Rational): Rational= new Rationnal(.....)
+
+Abstract class:
+abstract class Element{}()
+Method abs: nobody:
+def contents: Array[String]
+class ArrayElement (conts: Array[String]) extends Element{}
+
+Trait:
+trait Swimming {
+	def swim()= print("I'm.....")
+}
+class Penguin extends Bird with Swiming
+
+------------
+Access Modifiers:
+public
+protected
+private
+protected[<name>]
+private[<name>]
+-----
+Thuộc tính của class: class att
+Thực thể là con của phương thức -> method của thực thể có thể kế thừa từ nhiều cha.
+Nhiều giá trị khác nhau -> thuộc lớp đối tượng (instance)

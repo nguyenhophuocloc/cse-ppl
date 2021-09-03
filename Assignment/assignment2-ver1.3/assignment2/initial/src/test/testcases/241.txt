@@ -1,0 +1,8 @@
+
+            Function foo()
+            {
+                For j In a{
+                    Break;
+                }
+            }
+        

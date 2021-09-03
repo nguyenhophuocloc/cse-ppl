@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[While(BooleanLiteral(true),[ForIn(Id(i),ArrayLiteral(NumberLiteral(3.0),NumberLiteral(2.0),NumberLiteral(1.0)),[[VarDecl(variable=Id(name='x'), varDimen=None, typ=NoneType(), varInit=ArrayLiteral(value=[ArrayLiteral(value=[])]))]])])])])

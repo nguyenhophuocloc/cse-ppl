@@ -1,0 +1,152 @@
+Syntax:
+Đọc chuỗi token -> parse tree or abs syntax tree (AST)
+Trả về lỗi khi sai cú pháp.
+Src -> Lexer -> Parser
+a -> ID -> tree
+----------
+NNLT có nhiều cấu trúc đệ quy, đối xứng
+-->R.E ko express hết được.
+	Cần PP mô tả.
+	Một PP phát hiện toke hợp lệ or ko.
+-----------
+CFG:
++ Tập KT T, ko có empty
++ Tập ko kết thức N.
++ Bắt đầu S thuộc N.
++ Tập sinh P: X->a. dấu | là 2 luật sinh.
+Luật sinh mỗi lần chỉ thay thế 1 ký hiệu và phải thay thế đúng ngay ở vị trí đó.
+Có thể làm từ bên trái hoặc bên phải (all-in)
+Bắt đầu với str chỉ chứa ký tự bắt đầu.
+Thay thế ký tự ko kết thúc bằng production.
+Lặp lại bước 2 tới khi ko còn ký tự ko kết thúc.
+VD:
+<exp>	-> <exp> ADDOP <exp>
+	| <exp> MULOP <exp>
+	| LB <exp> RB
+	| INTLIT
+với:
+Terminal: :{ADDOP, MULOP, INTLIT, LB, RB}
+Non-ter: <exp>
+Start: <exp>
+P:
+<exp> -> <exp> ADDOP <exp>
+<exp> -> <exp> MULOP <exp>
+<exp> -> INTLIT
+<exp> -> LB <exp> RB
+CFG:
+<exp>	-> INTLIT MULOP INTLIT ADDOP INTLIT
+-------
+CFG check: string lẫn Parser Tree
+Parse tree:
+	Start: là root.
+	X->Yi: thêm con Yi vào node X.
+-------
+Đặc tả ngôn ngữ.
+--------
+Bậc: program: decl và func
+     decl: vardecl constdecl
+     var: type idlist
+     func: para stmt
+     stmt: exp
+--------
+CFG chỉ mô tả order (thứ tự) ko mô tả ràng buộc.
+Non ter thì bên phải.
+
+Khai báo hằng:
+<identifire> = <expression>;
+Ko chứ biến or method.
+VD: My1stCons =1+5;
+    MyndCons= 2*My1stCons;
+
+many:
+vardecl: listid, fuction: parameter, block: stmt
+<many>	-> <one> [<separator>] <many>
+	|  <non recustion case>
+
+separator: dấu phẩy, chấm phẩy....
+non-recur case: trường hợp element ít nhất (ds biến, tso, stmt trong func)
+VD:
+listid	-> ID COMMA listid
+	| ID
+
+Nest structure:
+Func in func, stmt in stmt, block in block, exp in exp
+<stmt>	-> IF <exp> THEN <stmt> ELSE <stmt>
+	| WHILE <exp> DO <stmt>
+---------
+EBNF:
+Cho phép sử dụng operator (*,+,....) in R.E.
+Chi phí cao.
+Hỗ trợ parsing geneter top -down
+EBNF là BNF
+VD:
+BNF:
+<exp>	-> <exp> '+' <exp>
+	| <exp> '-' <exp>
+	| <term>
+EBNF:
+<term> (('+'|'-') <term>)*
+ANTLR:
+exp: term (('+'|'-') term)*;
+
+<else>	-> ELSE <stmt>
+	| empty
+
+("else" <stmt>)?
+
+else: ("else" stmt)?;
+
+<idlist> -> ID ',' idlist
+	 |  ID
+
+ID (',' ID)*
+
+idlist: ID (',' idlist)*
+
+----------
+Nhập nhằng: Trick: có cái token giống nhau ở những vị trí xen kẽ: S->SS hoặc S->AcA
+Tham lam: nhiều cây parse tree có thể thỏa 1 chuỗi token- > grammar is ambigous.
+-> program ko xác định.
+
+Viết lại ko tham lam, hoặc dùng grammar tools.
+VD: <exp> -> <exp> ADDOP <exp> | <exp> MULOP <exp>
+	  | INTLIT
+	  | LB <exp> RB
+2 <exp>: là nguồn gốc tham lam. (thứ tự trước sau)
+
+Bỏ <exp>, thêm <term>
+<exp> -> <exp> ADDOP <term> | <exp> MULOP <term>	
+	| <term>
+<term> -> INTLIT	
+	| LB <exp> RB
+
+------
+Mặc định: kết hợp trái
+Kết hợp trái, phải:
+Trái: <exp> -> <exp> ADDOP <term>
+Phải: <exp> -> <term> ADDOP <exp>
+Ko có: <exp> -> <term> ADDOP <term> 
+-------
+Bậc ưu tiên
+Độ ưu tiên thấp nhất đi đầu.
+2 phép toán có độ ưu tiên ngang nhau thì xét từ trái qua.
+//Trong antlr thì có độ ưu tiên cao nhất viết đâu, kết hợp thì dùng assoc=right
+-------
+ANTLR:
+<assoc=right> expr '=' expr // đã cũ
+Muốn viết chỉ có thể viết theo kiểu bình thường:
+Ví dụ: 
+kinds of INFIX operators: ’+’, ’-’, ’*’ and ’/’
+where ’+’ have lower precedence than ’-’ while ’*’ and ’/’ have 
+the highest. 
+	’+’ :right associative, 
+	’-’ is non-associative 
+	’*’ and ’/’ is left-associative.
+exp: exp1 ADD exp | exp1;
+exp1: exp2 SUB exp2 |exp2;
+exp2: exp3 (DIV|MUL) exp2 |exp3;
+exp3: LP exp RP| INTLIT| FLOATLIT|ID|callstmt;
+*Lưu ý: INFIX
+Lưu ý có thể xung đột nếu đặt tên là type, id...
+-------
+Nhìn parse sinh ra bởi token phải nhớ xét thứ tự từ trái qua (node con)

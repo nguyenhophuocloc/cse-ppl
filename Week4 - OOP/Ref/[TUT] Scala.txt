@@ -1,0 +1,99 @@
+1. Class
+class ChecksumAccumulator{
+    //class def here
+}
+Create:
+new ChecksumAccumulator
+VD:
+class ChecksumAccumulator{
+    var sum=0   //public (default)
+}
+val acc= new ChecksumAccumulator    //dùng val, nếu ko auto: var
+acc.sum=3
+//val - mutable, var - imutable
+VD:
+class ChecksumAccumulator{
+    private var sum=0
+}
+val acc= new ChecksumAccumulator
+acc.sum=5 //won't compile (private)
+class ChecksumAccumulator{
+    private var sum =0;
+    def add(b: Byte): Unit={
+        sum+=b
+    }
+    def checksum():Int= {
+        return ~(sum & 0xFF)+1
+    }
+}
+//Any para can be use in method, para: val
+VD:
+def add(b: Byte): Unit={
+        b=1     //var
+        sum+=b  //won't compile
+}
+Rút gọn: ko cần quá rõ ràng return, multiple,...
+class ChecksumAccumulator{
+    private var sum =0;
+    def add(b: Byte): Unit= sum+=b
+    def checksum():Int= ~(sum & 0xFF)+1
+}
+->
+ def add(b: Byte): { sum+=b }
+ ------------------------------
+2. Traits
+look just like class:
+trait Philosophical{
+    def philosophize(){
+        println("I consume memory, therefore I am!")
+    }
+}
+Class using extend to mixed trait:
+class Frog extends Philosophical{
+    override def toString ="green"
+}
+->->Mixing in a trait using with.
+val frog = new Frog
+Frog= green
+frog.philosophize()
+->I consume memory, therefore I am!
+or:
+val phil: Philosophical =frog
+Philosophical = green
+phil.philosophize()
+->I consume memory, therefore I am!
+or
+VD:
+If you want to mix in multiple traits, you add more with 
+clauses. For example, given a trait HasLegs, 
+you could mix both Philosophical and HasLegs 
+into Frog as shown in:
+class Animal
+class Frog extends Animal with Philosophical{
+    override def toString = "green"
+}
+->Mixing in a trait using with.
+class Animal
+trait HasLegs  
+class Frog extends Animal with Philosophical with HasLegs {
+    override def toString = "green"
+}
+-> Multi trait
+--------------
+3.Case class
+abstract class Expr
+case class Var(name: String) extends Expr
+case class Number(num: Double) extends Expr
+case class UnOp(operator: String, arg: Expr) extends Expr
+case class BinOp(operator: String, 
+        left: Expr, right: Expr) extends Expr
+Create: //ko new
+val v= Var("x")
+Var = Var(x)
+----------------------
+4 Acess modifier
+default: public
+inher: protected
+private
+scope: upto scope
+[this]-> sử dụng cho implicit object với class đó

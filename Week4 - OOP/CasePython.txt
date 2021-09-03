@@ -1,0 +1,85 @@
+*Class vs Object
+class Employee:
+	empCount=0 #static field
+	def __init(self,n,s):
+		self.name=n 	#name: instance field
+		self.salary=s
+		Employee.empCount+=1
+	@classmethod
+	def create(cls,n,s):
+		print cls.emCount
+		return cls(n,s)
+	@staticmethod
+	def isHighSal(s);
+		if s>8:
+			print "High Salary"
+obj= Employee("Nam",30) #obj
+Employee.isHighSal(30)
+
+self: first param for instance
+@classmethod:define class method
+@staticmethod: define static
+*Encapsulation
+Protected: _example
+Private: __example
+Public: example
+Python3:
+Mul inheritace
+Root is obj
+class A: ->superclass is obj
+class Rectangle(A): A is superclass
+class Square(A,B): A,B
+**BT kim cương
+A
+B(A)
+C(A)
+D(B,C)
+
+L(object)=[object]
+L(M(A,B,C))=[M] + merge(L(A),L(B),L(C),[A,B,C])
+not tail = good, sau khi chọn được good thì xóa hết ele đó trong tất cả arr.
+ko phải good thì tiếp tục chọn head tiếp theo.
+*SOLUTION:
+L(A)=[A,o]
+L(B(A))=[B] + merge(L(A),[A])=[B,A,o]
+L(C(A))=[C] + merge(L(A),[A])=[C,A,o]
+L(D(B,C))=[D] + merge(L(B),L(C),[B,C])= [D,B,C,A,o]
+merge([B,A,o],[C,A,o],[B,C])
+Chọn B: good => [B] + merge([A,o],[C,A,o],[C]
+Chọn A: not good (trùng tail [C,A,o])
+Chọn C: good => [B,C] + merge([A,o],[A,o],[])
+Chọn A: good => [B,C,A] +merge([o],[o],[])
+Chọn o: good => [B,C,A,o]
+=>L(D)= ?
+*super, instance, type
+super() => refer to the superclass, tương tự this là refer chính nó.
+isinstance(o,T) => check if obj o is of type T
+type(o) : trả về type của o, lưu ý type ko bị ảnh hưởng của kế thừa (của con là
+của con, ko care cha)
+*Polymorphism
+Overloading
+def func(par1,par2=0):pass
+func(1,2)
+func("a")
+Universal Poly: override func trong class con
+*Some issue:
+- id(o): address of o
+x,y,z=3,3,4
+x same address y -> same obj
+- is vs ==
+is: true when same obj
+==: true when att are equal
+- with <exp> as <variable>:
+	<stmt-list>
+Vận hành:
+	var = exp
+	enter()
+	stmt
+	exit()
+VD:
+with open('abc.txt','r') as f:
+	print(f.read())
+f.closed()
+*Abstract class
+from abc import ABC
+class Name: pass

@@ -1,0 +1,6 @@
+
+            Function foo()
+            {
+                Call(println,[True, x + y, 12 - 7, "anc"]);
+            }
+        

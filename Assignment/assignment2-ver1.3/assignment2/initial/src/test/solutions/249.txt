@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[CallStmt(Id(println),[CallExpr(Id(println),[CallExpr(Id(println),[Id(zyasdad)])])])])])

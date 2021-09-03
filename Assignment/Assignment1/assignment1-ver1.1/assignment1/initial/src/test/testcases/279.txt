@@ -1,0 +1,7 @@
+
+            Function foo()
+            {
+                x = 123 & "abc";
+                y = True || False && 1.2;
+            }
+        

@@ -1,0 +1,143 @@
+FP
+Mathematical Func
+High-order Func
+--------
+*Function Composition:
+- Nhận 2 func như parameter
+- Tạo ra 1 hàm có thực thể 1 áp dụng cho thực thể 2.(para 2 làm tham số)
+VD:
+f o g= f:(g:x)
+f(x)=x+2
+g(x)=x*x
+f o g(x)=x*x + 2
+Scala:
+val f=(x:Double) => x+2
+val g=(x:Double) => x*x
+val h= f compose g
+h(3)
+val k = f andThen g
+k(3)
+*Apply-to-all:
+- Lấy 1 func xem như para.
+- Trả về danh sách giá trị nhận được từ việc áp dụng cho từng phần tử của list.
+VD:
+h(x)=x*x => alpha h:(1,2,3) trả về (1,4,9)
+Scala:
+List(2,3,4).map((x:Int) => x*x)
+def inc (x:Int) = x+1
+List(4,5,6).map(inc)
+*Forall/Exists
+- Nhận 1 predicate function (bool) là para.
+- Trả về giá trị nhận được từ áp dụng ele của list vào function và take and/or 
+result.
+Scala:
+def isEqualToThree(x:Int) = x ==3
+List(2,3,4).forall(isEqualToThree) -> False
+List(2,3,4).exists(isEqualToThree) -> True
+*Insert Left/ Insert Right
+/f: <x0>, <x1,x2,...,xn>
+f=(x0,x1)
+f=(f,x2)
+...
+f=f(f,xn)
+\f: <x0>, <x1,x2,...,xn>
+f=(xn,x0)
+f=(xn-1,f)
+.....
+f=(x1,f)
+Scala:
+List(2,3,4).foldLeft(0)((a,b)=>a+b) //9
+List(2,3,4).foldLeft(1)((a,b)=>a*b) //24
+List(2,3,4).foldLeft("A")((a,b)=>a+b) //A234
+List(2,3,4).foldRight("A")((a,b)=>a+b) //234A
+*Functions as Parameters:
+- Như cái tên. @@
+def apply(x:Int)(f:Int=>Int)= f(x)
+val incl=(x:Int)=>x+1
+val sq=(x:Int) =>x*x
+val fl=List(incl,sq)
+fl.map(apply(3))
+*Closure:
+Đối tượng có data -> func.
+function có data -> closure
+Closure= function + binding of its free variables.
+def power(exp:Double)= (x:Double)=>math.pow(x,exp)
+val square=power(2)
+square(4) //16
+val cube=power(3)
+cube(3) //27
+*Currying functions:
+f: X1 x X2 x..... Xn ->Y
+curry: f: X1 -> X2 -> .... -> Xn ->Y
+def add(x:Int, y: Int)= x+y
+add(1,3)
+add(1) add(1)(3) //failed
+def plus(x:Int)(y:Int) =x+y
+plus(1)(3)
+val inc1=plus(1) _
+inc1(3)
+val addCurried =(add _).curried
+val plusUncurried= Function.uncurried(plus _)
+*Immutability:
+Là những thứ ko change được.
+VD: "Hello".toUpper() ko change "Hello" nhưng new string "HELLO"
+val: immutability
+val num =12
+num =10 // failed
+- Ko đột biến: trả lại res là 1 giá trị mới.
+--------------
+Body của func là exp.
+Nhiều exp, giá trị của exp cuối trả về.
+Return có thể ko cần.
+----------
+Pattern Matching: like switch, more powerful
+Syntax:
+<exp> match{
+case <pattern1> => <exp1>
+.....
+}
+VD:
+def mathTest(x:Int):String=x match(
+	case 1 =>"one"
+	case 2=> "two"
+	case _=>"many"
+}
+------------
+Đệ quy:
+Cần return, def.
+while, for luôn luôn express as recursion.
+-------------
+Lazy evaluation:
+VD:
+lazy val x=1+y
+1+y eval when x is firstly used
+Pass-by-name:
+def foo(b:Boolean, x:=>Int, y:=>Int)= if (b) x else y
+foo(a==0,1,b/a)
+- Khi viết => trước kiểu của thông số, thì 
+thông số sẽ được truyền theo tên (pass-by-name). 
+Khi đó các biểu thức thông số chỉ được tính 
+khi thông số hình thức được sử dụng trong thân hàm.  
+-------------
+Type Inference (Suy luận kiểu)
+C++:
+char *greeating="Hello";
+greeating=42; //Error
+JS:
+var greeting = ’Hello’;//This is JavaScript
+greeting = 42;//Ok
+alert(greeting.length);//Runtime Error
+Scala: ko là val
+- Có thể overried type
+var greeting: Any="Hello"
+greeting=42
+- Ko cần Bắt buộc khai báo type trong def(Scala)
+- Exceptiong, Đệ quy trả về type được khai báo.
+- Anonymous function có thể ko cần khai báo type.
+VD:
+def twice(f: (Int)=>Int, x:Int)=f(f(x))
+twice(x=>42*x,3)
+--------------
+Lập trình hàm thuần khiết (Pure) giá trị của 1 biến ko đổi.
+While: ko thực thi hoặc là lập vô hạn.
+Hàm đệ quy phải khai báo kiểu trả về, còn lại thì ko.

@@ -1,0 +1,13 @@
+
+            Function foo()
+            {
+                While(True){
+                If (True) { 
+                    Return Call(something,[]);
+                }
+                Else{
+                    Return;
+                }
+                }   
+            }
+        

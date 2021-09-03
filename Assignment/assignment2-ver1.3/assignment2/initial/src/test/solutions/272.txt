@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[If(BinaryOp(<,Id(a),NumberLiteral(5.0)),[While(NumberLiteral(0.0),[While(Id(nothing),[])])])])])

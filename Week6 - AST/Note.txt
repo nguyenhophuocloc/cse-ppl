@@ -1,0 +1,78 @@
+AST
+- cây đại diện cho cú pháp trừu tượng src code.
+- Khác với cây cú pháp (parse tree) bởi một số chi tiết bị bỏ qua.
+- Giúp bước subsequence không phụ thuộc vào quá trình phân tích cú pháp.
+VD:
+Parse tree: ifstmt: IF <exp> THEN <stmt1> ELSE <stmt2>
+AST tree: ifstmt: <exp> <stmt1> <stmt2>
+Scala:
+trait Exp
+case class BinExp(op:String, e1:Exp, e2:Exp) extends Exp
+case class UnaExp(op:String, e:Exp) extends Exp
+case class Lit(i:Int) extends Exp
+4*(5+3)
+BinExp("*",Lit(4),BinExp("+",Lit(5),Lit(3)))
+-------
+ANTLR:
+A grammar => class
+A nonterminal => an inner class
+VD:
+grammar MC:
+prog: stmt+;
+Sẽ thành
+class MCParser{
+	class ProgContext
+}
+-------
+*Mỗi symbol on RHS => 1 or 2 method inner class
+VD:
+assign: ID ASSIGN exp SEMI;
+class AssignContext{
+	TerminalNode ID(){}
+	TerminalNode ASSIGN(){}
+	ExpContent exp(){}
+	TerminalNode SEMI(){}
+*Same symbol appears many times in RHS => 2 method (dùng list)
+VD:
+ifstmt: IF exp THEN stmt ELSE stmt;
+class IfstmtContext{
+	List<StmtContext> stmt(){}
+	StmtContext stmt(int: i){}
+	ExpContent exp(){}
+	TerminalNode IF(){}
+prog: stmt+;
+class ProgContext{
+	List<StmtContext> stmt(){}
+	StmtContext stmt(int :i)(){}
+------
+getChild(int:i): i th child
+int getChildCount(): number of children
+------
+VisitorGenerated ANTLR
+- Method accept use with inner class
+<grammar name>+Visitor.java
+<grammar name>+BaseVisitor.java gen grammar MC;
+=> MCVisitor.java, MCBaseVisitor.java
+- Each nonterminal symbol a => visitA(ctx:AContext)
+VD:
+interface MCVisitor<T> extends ParseTreeVisitor<T>
+{
+	T visitProg(MCParser.ProgContext ctx);
+}
+-----------
+VD:
+12 * (3 + 5) - 20
+BinExp("-",BinExp("*",Lit(12),BinExp("+",Lit(3),Lit(5))),Lit(20))
+VD:
+assign → ID ASSIGN exp SEMI
+ctx.exp()
+ifstmt → IF exp THEN stmt ELSE stmt
+ctx.stmt(1)
+
+Có bao nhiêu nút con ?	-> nhiều đáp án
+
+exp -> ?
+T visitExp(ABCParser.ExpContext ctx)
+
+tạo AST cho nút con:
+ctx.stmt.accept(this)

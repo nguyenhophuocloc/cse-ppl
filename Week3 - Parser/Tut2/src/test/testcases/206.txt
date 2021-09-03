@@ -1,0 +1,8 @@
+
+                    float int x;
+                    int Sum(float n; int a,b) {
+                        int sum; 
+                        sum=a+b  
+                        return sum;
+                    }
+                

@@ -1,0 +1,27 @@
+80ph
+Câu 1:
+viết ast
+cho 1 grammar -> AST
+program -> vardecl -> vardecls...
+Viết vardecls/vardecltail.....
+
+ví dụ 5 tín hiệu ko kết thúc
+mô tả trả về cái gì
+Câu 2:
+StaticChecker
+Name/Type/Block
+
+Câu 3:
+mã c++/java/python
+viết jasmin tương đươnng
+a=5;
+iconst_5
+istore_1
+
+Câu 4:
+Suy diễn kiểu
+
+Câu 5:
+2 trường hợp:
+- các cơ chế truyền tham số: c++/python -> ????
+- các cơ chế gọi chương trình con: simple, exception, schedule

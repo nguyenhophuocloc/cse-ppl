@@ -1,0 +1,1 @@
+Program([VarDecl(Id(z),[NumberLiteral(123.0)],NoneType)])

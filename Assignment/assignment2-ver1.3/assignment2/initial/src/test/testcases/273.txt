@@ -1,0 +1,12 @@
+
+            Function foo()
+            {
+                While(True)
+                {
+                    For i In [3,2,1]
+                    {
+                        Let x=[[]];
+                    }
+                }
+            }
+        

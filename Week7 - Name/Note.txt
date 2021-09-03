@@ -1,0 +1,215 @@
+Name
+- Ký tự được dùng để biểu diễn một thứ khác: variables, constants, 
+functions, types, operations
+	+ identifiers (định danh)
+	+ operators (toán tử) (+,&,*)
+- Sử dụng symbol thay cho address của thực thể.
+- Trừu tượng
+----------
+Binding (An association of a name with an object): 
+- Binding: Hoạt động liên kết giữa 2 thứ.
+- Binding time: khoảnh khắc khi kết nối được thực hiện.
+- Một số vấn đề:
+	+ Early binding vs. Late binding
+	+ Static binding vs. Dynamic binding
+	+ Polymorphism - A name is bound to more than one entity.
+	+ Alias - Many names are bound to one entity
+*Binding time: TG RB
+- Language design time (thiết kế NN): liên quan cú pháp và ngữ nghĩa.
+VD: how variable declarations are written.
+    kiểu nguyên phải là int (ng TK NN)
+- Language implementation time (hiện thực): nhiều vấn đề khác nhau tùy theo 
+quyết định của người imple NN, vào lúc hiện thực chương trình.
+VD: (number of bits) of the fundamental types: int - 4bit
+the organization and maximum sizes of the stack and the heap, 
+and the handling of run-time exceptions: arithmetic overflow (tràn số học),...
+- Programming time (lập trình): provided to the language runtime by the OS layer.
+VD: C++ - windows, js - browser, java - JVM
+    lúc lập trình thì x là kiểu int,...
+- Compilation time: Compiler liên kết tên với obj.
+VD: một kiểu với một biến, hoặc stack được allocated với 1 biến.
+    Ràng buộc lệnh gọi với ct con được gọi.
+- Linking time: Tham chiếu đến các functions not be resolved cho đến khi các tệp .o riêng biệt
+được biên dịch. Sau đó placeholder reference can be replaced with an "address".
+VD: nối các file object lại.
+- Load time: gán các ô nhớ vật lý để thực thi.
+VD: Nạp lên ổ đĩa (địa chỉ ảo -> lên thật)
+- Runtime: Binding is delayed until run-time, VD: dynamic typing trong các NN 
+thông dịch (không thể xác định loại biến cho đến khi nó được gán giá trị 
+trong nhập động (form,...)), 
+việc gán một đối tượng được cấp phát động cho một biến con trỏ 
+hoặc ràng buộc của một phương thức ảo (virtual) với một lời gọi hàm.
+VD: lúc nhập biến thì ràng buộc mới xảy ra.
+---------
+Object Lifetime
+- Object: thực thể chương trình.
+- Object lifetime: the period between the object creation and destruction.
+- Binding lifetime.
+- Dangling reference: (tham chiếu treo)
+VD:
+	p = new int;
+	q = p;
+	delete p;
+	*q; //failed
+- Leak memory - Garbage (rác):
+VD:
+	p = new int;
+	p = null;
+--------
+Object Allocation
+- Static: toàn cục
+- Stack: cục bộ.
+- Heap: biến động.
+--------
+Block: một vùng textual, có thể chứa các khai báo trong đó.
+VD:
+	{
+		int x;
+		x = 1;
+	}
+--------
+Scope: 
+- Là phạm vi vùng văn bản của chương trình có hiệu lực.
+*Static vs Dynamic
+- Static scope: during compilation
+	+ Current binding (lk hiện tại (name->address) trong khu vực gần nhất)
+	+ Global scope
+	+ Local static scope.
+- Dynamic scope: at runtime
+	+ Current binding (lk hiện tại (name->address) trong khu vực gần nhất
+but not destroyed)
+--------
+Static Rule for Block:
+- A reference to an identifier luôn được ràng buộc với khai báo local. 
+- A declaration is invisible nếu ở bên ngoài block in which it
+appears.
+- Declarations in enclosing blocks are visible in inner
+blocks, unless they have been re-declared
+- Các block có thể được đặt tên và khai báo tên là một khai báo cục bộ 
+của block bên ngoài. 
+VD: Static Scope
+	var A, B, C: real; //1
+	procedure Sub1 (A: real); //2
+		var D: real;
+		procedure Sub2 (C: real);
+			var D: real;
+			begin
+				...C:= C+B;...
+			end;
+		begin	
+			...Sub2(B);...
+		end;
+	begin
+		...Sub1(A);...
+	end.
+
+Variable:	Scope
+A: real//1	Main
+B: real//1	Main, Sub1, Sub2
+C: real//1	Main, Sub1
+A: real//2	Sub1, Sub2
+**Scope là phạm vi nó có hiệu lực.
+VD như C: có thể dùng trong Main, Sub1, nhưng qua Sub2 thì ko thể dùng
+vì lúc đó sử dụng C local.
+VD: Dynamic Scope:
+procedure Big is
+	X : Real;
+	procedure Sub1 is
+		X : Integer;
+		begin – of Sub1
+			. . .
+		end; – of Sub1
+	procedure Sub2 is
+		begin – of Sub2
+			. . . X . . .
+		end; – of Sub2
+begin – of Big
+. . .
+end; – of Big
+
+X trong Sub2?
+TH1:
+Call chain: X->Sub1->Sub2
+X=> X:Integer in Sub1
+TH2:
+Call chain: X->Sub2
+X=> X: Real in Big
+----------------
+Referencing Environment
+- The referencing environment of a statement is the
+collection of all names that are visible to the statement.
+- static-scope: local names plus all of
+the visible names in all of the enclosing scopes
+- dynamic-scope:  local bindings plus all visible bindings in 
+all active subprograms
+VD: Static Scope
+	var A, B, C: real; //1
+	procedure Sub1 (A: real); //2
+		var D: real;
+		procedure Sub2 (C: real);
+			var D: real;
+			begin
+				...C:= C+B;...
+			end;
+		begin	
+			...Sub2(B);...
+		end;
+	begin
+		...Sub1(A);...
+	end.
+Function	Referencing Environment
+Main		A,B,C,Sub1
+Sub1		A//2,B,C,D,Sub2
+Sub2		A//2,B,C//4,D//5,Sub2
+VD: Dynamic Scope:
+void sub1() {
+	int a, b;
+	. . .
+} /* end of sub1 */
+void sub2() {	
+	int b, c;	
+	. . .
+	sub1;
+} /* end of sub2 */
+void main() {
+	int c, d;
+	. . .
+	sub2();
+} /* end of main */
+
+Call chain:
+main	sub2	sub2	sub1
+c:o1	b:o3	b:o5	a:o7
+d:o2	c:o4	c:o6	b:o8
+
+Frame		Referencing Environment
+main		c->o1,d->o2
+sub2		b->o3, c->o4, d->o2
+sub2		b->o5, c->o6, d->o2
+sub1		a->o7, b->o8, c->o6, d->o2
+-----------
+BKEL:
+- Dangling reference-Tham chiếu treo:(đối tượng dữ liệu thì mất nhưng tên vẫn còn)
+- Alias: bí danh là khái niệm về trường hợp cùng một đối tượng dữ liệu có nhiều 
+tên khác nhau
+- Garbage: đối tượng dữ liệu không thể truy xuất
+- Polymorphism - Đa hình: cũng với 1 tên là GetMax nhưng có thể tham chiếu đến 
+những hàm khac nhau tuỳ theo kiểu của myType
+-----------
+Quiz:
+int *z=new int;
+z: stack
+new int: heap
+Chú ý lỗi: Dangling ref, Alias, Garbage
+Dangling ref:
+Alias:
+	int s=0;
+	int *p=&s;
+	int *q=p;
+Có 3 alias: *q,*p,s
+Garbage:
+Tạo ra rác:
+	...
+	a= new int;
+	return 0;
+	}

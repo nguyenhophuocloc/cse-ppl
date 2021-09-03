@@ -1,0 +1,9 @@
+
+            Function foo()
+            {
+                Return;
+                Return;
+                Return;
+                Return;
+            }
+        

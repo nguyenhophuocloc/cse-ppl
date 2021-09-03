@@ -1,0 +1,1 @@
+Program([VarDecl(Id(a),NoneType,JSONLiteral((Key=Id(age),Value=NumberLiteral(10.0)),(Key=Id(b),Value=JSONLiteral((Key=Id(name),Value=StringLiteral(loc)))),FuncDecl(Id(main)[],[ForOf(Id(x),Id(a),[])])])

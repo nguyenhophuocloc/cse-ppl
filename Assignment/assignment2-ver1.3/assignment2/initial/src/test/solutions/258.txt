@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[While(BinaryOp(>,ArrayAccess(Id(a),[NumberLiteral(5.0)]),NumberLiteral(1.0)),[])])])

@@ -1,0 +1,7 @@
+
+            Function foo()
+            {
+                If (False)
+                }
+            }
+        

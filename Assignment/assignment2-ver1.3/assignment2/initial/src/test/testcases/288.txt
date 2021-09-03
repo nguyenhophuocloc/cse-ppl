@@ -1,0 +1,6 @@
+
+            Function foo()
+            {
+                x = a[123] + "sdsd";
+            }
+        

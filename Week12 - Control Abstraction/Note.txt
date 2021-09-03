@@ -1,0 +1,188 @@
+Contral Abs (Trình tự hóa điều khiển)
+1. Sub-program def:
+- Đặc tả:
+	+ tên
+	+ tham số:
+		input+output
+		order
+		type
+		kiểu truyền
+	+ hành vi
+- Cách hiện thực
+	+ local data
+	+ subpro body
+---------------------------------
+- Bảng hoạt động chương trình con:
+	+ tạo ra khi subpro được gọi.
+	+ hủy khi xong exe.
+Gồm:
+	Static part: mã
+	Dynamic part: bảng ghi hoạt động
+		các thông số
+		dữ liệu cục bộ.
+		địa chỉ trả về
+		link khác để xuất dữ liệu
+-----------------------------------
+2. Cơ chế gọi subpro
+--------------------------
+Simple Call-Return:
+Gọi trả về đơn giản
+- ko cho phép đệ quy. (mã máy, MIPS...)
+- Lệnh gọi tường minh (có lệnh rõ ràng)
+- Single Entry Point
+- Truyền tức thời
+- Cơ chế thực thi đơn (A->B => A phải tạm ngưng.
+-----------------------------
+Gọi đệ quy
+- trực tiếp (gọi chính nó)
+- gián tiếp (qua ct khác)
+- Còn lại giống simple call-return
+---------------------------------
+Exception Processing Handler
+Biến cố và xử lý biến cố
+- ko có lệnh gọi tường minh.
+- Sử dụng:
+	- lập trình hướng sự kiện.
+	- Xử lý biến cố (error handler)
+Đặc tả:
+	which: xử lý loại b/cố nào, how: ntn định nghĩa.
+	how: làm thế nào raised (ném)
+	how: làm thế nào xử lý
+Rasing exception:
+	- by user interaction
+	- by OS
+	- by obj
+	- by programmer
+Handler:
+	- protected block
+non-resumable: xử lý xong ko quay lại + stack unwinding
+resumable: xử lý xong thì quay lại ngay hoặc sau biến cố.
+-----------------------------------------------------------
+Coroutines
+Cộng hành
+- nhiều entry
+- trả về resume ko bắt đầu lại.
+--------------------------------------------------
+Tasks
+Công tác
+- đồng thời nhiều tasks
+- máy đa nhiệm
+- cơ chế time sharing
+Vấn đề: đồng bộ: race condition, deadlock, truyền dữ liệu...
+--------------------------------------
+Scheduled subprograms
+Định thời
+- A-> B: có thể trì hoãn x(s) thời gian
+		độ ưu tiên
+- Có bộ định thời
+=>lập trình real time/OS
+-----------------------------------------------------------
+3. Parameter Passing
+- Khai báo: tham số hình thức. int foo(float x, bool &y);
+	- simple name
+	- close to var decl
+	- combine symbol to para passing
+- tham số thực: foo(4*a,b)
+	- an expr
+--------------------------
+by position
+int foo(float a, int b) <= foo(x+1,y-2)
+by name
+int foo(float a, int b) <= foo(b=x+1,a=y-2)
+------------------------------------------
+Các nhóm
+-I/O:
+- Pass by value-result (trị-kết quả)
+Truyền giá trị para thực cho para hình thức
+findMax(a,b) ) => int findMax(int x,int y) {...}
+caller		callee
+a = 5	value	5: x
+b = 6		6: y
+caller		callee
+a = 7	value	7: x
+b = 8		8: y
+thay đổi x,y trong findMax ko ảnh hưởng a,b
+nhưng khi kết thúc sẽ truyền value ngược về a,b = thay đổi
+- Pass by ref (truyền tham khảo)
+findMax(a,b) ) => int findMax(int& x,int& y) {...}
+caller		callee
+a = 5	address	 x
+b = 6		 y
+chép địa chỉ a,b vào x,y -> biến thành bí danh của a,b.
+Những thay đổi findMax -> trực tiếp a và b
+- Pass by name:
+findMax(a,b) ) => int findMax(int=> x,int=> y) {...}
+Truyền nguyên cái biểu thức thông số thực (nguyên cái tên)
+a ~~ x
+b ~~ y
+Chỉ thực thi khi biến tham khảo
+-----------------------------------------------------------------
+-I:
+- Pass by value (Truyền bằng trị)
+caller		callee
+a = 5	value	7: x
+b = 6		8: y
+- Truyền vào ko truyền ra.
+- độc lập, ko a/h, kết thúc ko đổi
+- Pass by constant ref (tham khảo hằng)
+findMax(a,b) ) int findMax(const int& x,const int& y) {...}
+- địa chỉ thực -> para hình thức (const)
+- vì là hằng x,y ko đổi=> a,b ko đổi
+**Cost: const ít hơn vì chỉ truyền địa chỉ
+-----------------------------------------------------------------
+-O:
+- Pass by result (kết quả)
+- ko truyền vào, nhưng kết thúc truyền ra
+findMax(a,b) ) => int findMax(int x,int y) {...}
+caller		callee
+a = 5	value	3: x
+b = 6		4: y
+5,6 ko vào, nhưng 3,4 được nhận
+- As a result of a function (như kết quả 1 hàm)
+int foo() ... return 0;
+No actual parameter: foo() + 1
+-------------------------------------------------------------------
+4. High order func: hàm bậc cao
+- là 1 hàm chấp nhận hàm khác làm I/O
+- Môi trường tham khảo non-local:
+	Deep binding: tầm vực sâu
+	Shallow binding: cạn
+int x = 1;
+int f ( int y ) { return x+y ; }		//gọi x là biến non-local
+int g ( int h (int b) ) {
+	int x = 2;
+	return h ( 3) + x ; / / shallow b ind ing
+}
+. . .
+{
+	int x = 4;
+	int z = g ( f ) ; / / deep b ind ing
+}
+Tầm vực động: deep/shallow:
+deep: truyền luôn cả môi trường tham khảo
+=9 (x=4)
+shallow: đi ra ct gọi
+=7 (x=2)
+Tầm vực tĩnh: Bình thường cứ nở hoa: x=1, kiếm cái gần nhất.
+--------------------------------------------------------------------------------
+Function as result
+Truyền hàm như là kết quả.
+Trả ra:
+	+ Code.
+	+ Env
+Kiểu hàm: 2 type: miền xác định và miền giá trị
+void−>int F () {
+	int x = 1;
+	int g () {
+	return x +1;
+	}
+	return g ;
+}
+void−>int gg = F () ;
+int z = gg ();
+
+biến z hứng được hàm F vì hàm F trả về g mà g là int
+lỗi vì: gg sau khi gọi xong hàm F() bảng điều khiển đã bị xóa, x đã mất.
+z sẽ ko nhận được giá trị của gg vì đã ko còn x
+Lưu ý: gg là biến ko phải hàm, nên sẽ ko tái gọi hàm F(), chức năng duy nhất của
+gg chỉ là lưu return của F()

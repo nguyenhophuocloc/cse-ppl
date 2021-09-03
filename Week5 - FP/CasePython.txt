@@ -1,0 +1,82 @@
+FP
+*Immutable Data:
+*Lambda function:
+lambda (<param>(, <param)*)?:<exp>
+VD:
+lambda a,b:a+b
+(lambda a,b:a+b)(3,4) #7
+x=lambda a,b:a+b
+x(3,4)
+- Ko tên, số lượng para tùy ý, 1 dòng, use high-order func
+*First-class function:
+- Hàm được gán para.
+- Truyền vào hàm khác.
+- Trả về giá trị.
+f(x): hàm f, para: x
+Composed:
+def f(x):
+	def g(y):
+		return x*y
+	return g
+m=f(3)	#m=f
+m(4)	#hàm f gán 4 cho hàm g
+*High-order func
+- map(<function>,<sequence>): apply <function> to each ele of <sequence>, 
+return iterator (từng pt)
+VD:
+cels=[1,2,3,4]
+fahr=list(map(lambda c:(float(9)/5)*c+32,cels))
+	=>[...,....,...,...,]
+2 para thì 2 sequence
+list(map(lambda x,y: x+y, [1,2,3], [4,5,6,7]))
+	=>[5,7,9] , pt cuối bỏ
+- filter(<function>,<sequence>): return iterator, that in <sequence> for which
+<function> return True.
+VD:
+list(map(lambda c:c%2==1, [0,1,2,3,4,5]))
+	=>F,T,F,T,F,T
+list(filter(lambda c:c%2==1, [0,1,2,3,4,5])) 
+	=>[1,3,5]
+- reduce(<function>,<sequence>(,<initial>)?): if <sequence> is [s1,s2,s3], reduce
+return function(function(s1,s2),s3) or 
+function(function(function(<initial>,s1),s2),s3)
+giảm số lần return, thành 1 lần
+VD:
+from functools import reduce
+reduce(lambda x,y: x+y,[1,2,3,4]) 
+	=> 10
+acc: pt gần nhất
+ele: list
+*Closure:
+def power ( y ) :
+	def inner ( x ) :
+		return x ∗∗ y
+	return inner
+square= power ( 2)
+square ( 5) => 25
+*Decorator: Cho phép sửa đổi hành vi của hàm hoặc lớp mà 
+không sửa đổi vĩnh viễn nó. 
+VD:
+Chưa sửa:
+def foo (x, y) :
+	return x*y
+print(foo(3, 4))
+
+Res: =>12
+Sau sửa:
+@log_decorator
+def foo ( x , y ) :
+	return x*y
+print(foo(3, 4))
+Res:
+foo is running
+12
+Why ?
+def log_decorator (func) :
+	def inner(*arg) :
+		print(func.__name__+"is running")
+		return func(*arg)
+	return inner
+------------
+
+

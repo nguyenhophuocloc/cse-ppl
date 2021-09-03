@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[Assign(ArrayAccess(Id(x),[NumberLiteral(5.0)]),NumberLiteral(0.0))])])

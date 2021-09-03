@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[While(BooleanLiteral(true),[ForIn(Id(i),ArrayLiteral(NumberLiteral(1.0),NumberLiteral(2.0),NumberLiteral(3.0)),[While(BooleanLiteral(false),[])])])])])

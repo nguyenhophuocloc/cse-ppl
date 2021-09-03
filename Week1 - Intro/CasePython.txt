@@ -1,0 +1,41 @@
+Python
+Var: [a-zA-Z_][a-zA-Z0-9_]*
+-------
+Assignment
+a=23
+a,b=b,a 	#swap
+a=b=c=23
+---------
+pass stmt: empty
+--------
+if stmt
+if <exp>:
+	<stmt-list>
+(elif <exp>:
+	<stmt-list>)*
+(else:
+	<stmt-list>)?
+--------
+While stmt
+while <exp>:
+	<stmt-list>
+[else:
+	<stmt-list>]
+else block is executed when <exp> becomes false
+for stmt:
+for <var> in <sequence>:
+	<stmt-list>
+[else:
+	<stmt-list>]
+else block is executed after iterating all elements of
+<sequence>
+break: like C++ => terminating the loop (hủy luôn cả else)
+continue: like C++ => ignoring the rest of the
+<stmt-list>
+-----------
+def <function name>(<parameters>):
+	<stmt-list>
+----------
+import <module>		//khác là phải <module>.reduce(...)
+from <module> import <items>	//reduce(...)
+from <module> import *		//2 hàm trùng tên reduce

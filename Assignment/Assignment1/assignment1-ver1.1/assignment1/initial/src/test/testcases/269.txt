@@ -1,0 +1,7 @@
+
+            Function foo()
+            {
+                Call(khongthetinnoi,[213, 232 - "abc", 3232]);
+                While (True) {}
+            }
+        

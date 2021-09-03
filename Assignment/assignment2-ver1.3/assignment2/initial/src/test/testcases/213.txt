@@ -1,0 +1,6 @@
+
+            Function foo()
+            {
+                Let x:Number=10;
+            }
+        

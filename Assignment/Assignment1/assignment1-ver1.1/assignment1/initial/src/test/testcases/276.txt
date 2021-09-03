@@ -1,0 +1,8 @@
+
+            Function foo()
+            {
+                x = "abc" >= 1.2;
+                y = True < True;
+                z[12] = x / 1e2;
+            }
+        

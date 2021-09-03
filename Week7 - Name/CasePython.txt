@@ -1,0 +1,106 @@
+Function and Scope
+Functions:
+def <func-name>(<parameter-list>):
+	<stmt-list>
+*Nested Funcions:
+def outer(x) :
+	y = x + 1
+	def inner(z) :
+		return z + 1
+	return inner(y)
+print(outer(3))		#5
+print(inner(2))		#wrong
+->inner function is visible inside outer but invisible
+outside outer
+--------
+*Match by position and by name
+def foo(param1, param2 = 0 ) :
+	print(param1,param2)
+print(foo(1,2))		#1,2
+print(foo(param2 = 2,param1 = 1))	#1,2
+print(foo(1))		#1,0
+->Python care vị trí -> tên
+---------
+*Arbitrary Arguments, *args:
+def my_func (*kids) :
+	print( "My third child is" + kids[ 2 ] )	#"My third child is Mam
+my_func( ’ Tuong ’ , ’Ca ’ , ’Mam’ , ’ Muoi ’ )
+->
+- Allow số lượng tùy ý đối số.
+- Access the parameter as a tuple
+- Định nghĩa sau khi chuẩn hóa parameters
+*Arbitrary keyword Arguments, **kwargs
+def my_func (**rec ) :
+	for x,y in rec.items():
+		print(x,y)
+my_func ( ho= ’nguyen’ , ten = 'thi ha', namsinh=1996,mssv= ’0123456 ’)
+->
+- Allow arbitrary number of keyword arguments
+- Access the parameter as a dictionary
+- Define after normal and arbitrary parameter
+--------
+Return stmt:
+return (<exp> (, <exp>)*)?
+def my_func(x) :
+	x = 2
+	return x, x+2
+a, b = my_func ()
+print(a,b) #2 4
+->
+- Stop executing of a function call and return the result
+- If no expression after return, None is returned
+- If many expressions after return, a tuple is returned
+-------
+Scope
+Read: Block rule, where a function is a block
+	- Local
+	- Nonlocal
+	- Global
+	- Built-in or imported environments
+Write: global, nonlocal
+VD:
+from functools import *		#imported env
+x = 3				#global
+def f ():			
+	y = 4			#nonlocal of g
+	def g():
+		t = 2		#local of g
+		print(z)
+->
+- declaration of z is looked firstly in local environment
+- and then in nonlocal environments that enclose the
+local
+- and then in global environment
+- and lastly in imported environments
+VD:
+x, y = 3 ,4			#x,y: global
+def f() :
+	x = 2			#x: local of f
+	return x + y		#x: local of f; y: global
+def g() :
+	global x		#x:global
+	x = 2			#x:global
+	return 2 + x
+f()				#6
+print(x)			#3
+g()				#4
+print(x)			#2
+->
+- firstly assigning to a variable makes the declaration of
+the variable in the current environment
+- to assign to a global variable in a function, the
+declaration of "global" is required
+VD:
+x, y = 3 ,4				#x,y:global
+def f() :
+	x,z = 2 ,5			#x,z: local of f
+	def g ():
+		nonlocal x		#x: nonlocal -> local of f
+		x = 2 * y
+		return z + x		#x,z: nonlocal
+	print(g())			#13		
+	print(x)			#8	
+f()					#13,8				
+print(x)				#3
+->
+like "global" but for "nonlocal" variables

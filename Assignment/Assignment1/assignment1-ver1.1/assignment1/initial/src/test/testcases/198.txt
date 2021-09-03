@@ -1,0 +1,1 @@
+a[3 + Call(foo,[2])] = a[b[2][3]] + 4;##asign statement##

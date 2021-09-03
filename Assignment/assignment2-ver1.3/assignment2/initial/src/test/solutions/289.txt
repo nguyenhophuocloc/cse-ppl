@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[Assign(ArrayAccess(Id(x),[NumberLiteral(23.0)]),BinaryOp(+,ArrayAccess(Id(a),[BinaryOp(||,BinaryOp(-,NumberLiteral(123.0),BinaryOp(*,ArrayAccess(Id(a),[NumberLiteral(67.0)]),StringLiteral(abc))),NumberLiteral(1e+45))]),StringLiteral(sdsd)))])])

@@ -1,0 +1,10 @@
+
+            Function foo()
+            {
+               
+                    While (False) 
+                    {
+                    }
+                While (True) {}
+            }
+        

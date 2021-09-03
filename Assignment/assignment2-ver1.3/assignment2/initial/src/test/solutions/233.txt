@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[If(BooleanLiteral(false),[Assign(Id(x),NumberLiteral(1.0))])ElseIf(BinaryOp(!=,Id(m),Id(n)),[Assign(Id(x),NumberLiteral(3.0))])ElseIf(BinaryOp(+,StringLiteral(abc),Id(def)),[Assign(Id(x),NumberLiteral(123.0))])Else([Assign(Id(x),NumberLiteral(0.0012))])])])

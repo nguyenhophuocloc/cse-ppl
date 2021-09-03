@@ -1,0 +1,6 @@
+
+            Function foo()
+            {
+                Call(do_something,[123, 1.23e5, y * d]);
+            }
+        

@@ -1,0 +1,15 @@
+
+            Function foo()
+            {
+                For i In a
+                {
+                    For j In a
+                    {
+                        For k Of b
+                        {
+
+                        }
+                    }
+                }
+            }
+        

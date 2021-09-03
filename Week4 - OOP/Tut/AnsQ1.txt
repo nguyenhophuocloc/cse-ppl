@@ -1,0 +1,26 @@
+Q1:
+a)
+L(O)=[O]
+L(A)=[A]+ M(L(O),[O])=[A,O]
+L(B)=[B,O]
+L(C)=[C,O]
+L(D)=[D] +M([A,O], [B,O], [A,B])
+[A] +M([O], [B,O], [B])
+[A,B] +M([O], [O], [])
+=>L(D)=[D,A,B,O]
+L(E)=[E]+ M([C,O], [A,O], [C,A])
+[C] +M([O], [A,O], [A])
+[C,A] + M([O], [O], [])
+=> L(E)=[E,C,A,O]
+L(F)=[F] +M([D,A,B,O], [B,O], [E,C,A,O],[D,B,E])
+[D] +M([A,B,O), [B,O], [E,C,A,O],[B,E]) -> fail
+Đảo E,B-> F(D,E,B)
+L(F)=[F] +M([D,A,B,O], [E,C,A,O], [B,O] [D,E,B])
+[D] +M([A,B,O], [E,C,A,O], [B,O], [E,B])
+[D,E] +M([A,B,O], [C,A,O], [B,O], [B])
+[D,E,B] +M([A,O], [C,A,O], [O])
+[D,E,B,C] +M([A,O], [A,O], [O])
+
+=> L(F) = [F,D,E,C,A,B,O]
+b)
+C.foo() 

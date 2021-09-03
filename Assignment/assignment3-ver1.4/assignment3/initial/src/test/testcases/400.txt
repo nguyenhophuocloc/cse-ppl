@@ -1,0 +1,4 @@
+Function: main
+                   Body: 
+                        foo();
+                   EndBody.

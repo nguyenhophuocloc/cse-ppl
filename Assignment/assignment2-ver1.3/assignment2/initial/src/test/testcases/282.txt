@@ -1,0 +1,7 @@
+
+            Function foo()
+            {
+                Let x, y;
+                x = y - x +. "123" - 456 * 056 == True % 2823 && False || 234;
+            }
+        

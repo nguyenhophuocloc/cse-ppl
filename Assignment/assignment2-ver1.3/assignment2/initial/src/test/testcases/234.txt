@@ -1,0 +1,8 @@
+
+            Function foo()
+            {
+                For x In a {
+                    x = x + 1;
+                }
+            }
+        

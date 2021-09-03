@@ -1,0 +1,9 @@
+
+            Function foo()
+            {
+                If (True){ Return;}
+                Else {
+                    Return;
+                }
+            }
+        

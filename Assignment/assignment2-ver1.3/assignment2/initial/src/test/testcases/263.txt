@@ -1,0 +1,11 @@
+
+            Function foo()
+            {
+                While (True) {
+                    For i In [1,2,3] {
+                        While (False) {
+                        }
+                    }
+                }
+            }
+        

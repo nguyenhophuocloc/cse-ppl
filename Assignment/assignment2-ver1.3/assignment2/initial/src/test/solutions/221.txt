@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[Assign(Id(x),NumberLiteral(10.0))])])

@@ -1,0 +1,10 @@
+
+            Function foo()
+            {
+                If (False){x = 1; }
+                Elif (m != n){x = 0xABC;}
+                Elif ("abc" + def){x = 123;}
+                Else {x = 1.2e-3;
+                }
+            }
+        

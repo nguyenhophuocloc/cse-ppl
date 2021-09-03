@@ -1,0 +1,6 @@
+
+            Function foo()
+            {
+                While (a[5]>1){}
+            }
+        

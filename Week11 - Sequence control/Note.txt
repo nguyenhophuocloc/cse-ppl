@@ -1,0 +1,196 @@
+Điều khiển trình tự
+1. Expressions: Cấp biểu thức
+Đơn vị văn phạm
+	+ Tạo ra giá trị.
+	+ Fail to terminate ->undfined
+VD:
+4+3*2
+(a+b)-c
+*Cơ chế tính toán exp: functional composition
+(tính biểu thức con-> truyền lên trên)
+VD:
+	*		(a+b)*(c-d)
+   +	    -
+a    b     c  d
+--------------------------------------------------------------
+Infix: trung tố
+- Phép toán nằm giữa.
+(a+b)*(c-d)
+- Tốt cho 2 ngôi.
+- Dễ tính toán.
+- Nhiều hơn 2 toán hạng ?
+(b!=0)?(a/b):0
+------------------------
+*Vấn đề tính ưu tiên:
+3+4*5= 23 not 35 
+- Eval in math
+- Có gắng giống toán.
+- Tùy ngôn ngữ.
+-------------------------
+*Tính kết hợp:
+- Khi có 2 hay nhiều phép toán cùng độ ưu tiên.
+VD: 10*10*10
+- Thường: left-to-right, trừ lũy thừa.
+- Tùy trường hợp có thể lựa cái ngon húp.
+-------------------------
+*Thay đổi:
+()
+- Dễ.
+- Khó đọc.
+------------------------
+*Conditional Exp:
+if ... else....
+=
+a>b ? c: d
+--------------------------------------------------------------
+Prefix
+- Polish Prefix: * + a b - c d 
+(ko có (), chỉ phép toán và toán hạng, cố định số toán hạng: 2/3...)
+- Cambridge Polish Prefix: (*(+a b) (-c d))
+(dùng (), số toán hạng thay đổi được (+ a b c) )
+- Normal Prefix: *(+(a,b),-(c,d))
+tên hàm(thông số), ko cần tính ưu tiên vì đã trong ngoặc
+---------------------------------------------------------------
+Postfix
+- Polish Postfix: a b + c d - *
+- Cambridge Polish Postfix: ((a b +) (c d -) *)
+- Normal Postfix: ((a,b)+,(c,d)-)*
+-------------------------------------------------------------------------
+Thứ tự tính toán toán hạng trong biểu thức:
+int a = 5;
+int fun1() {
+	a = 17;
+	return 3;
+}
+void main() {
+	a = a + fun1(); (đọc a hay fun1 trước)
+}
+=> 8 ? 20 ?
+----------------------------------------------------------------------------
+*Cơ chế
+Eager:
+	- Tính toán hạng.
+	- Tính phép toán
+	a == 0 ? b : b/a (trường hợp đặc biệt -> thừa 1 kết quả)
+Lazy:
+	- Truyền toán hạng chưa được tính vào.
+	- Phép toán quyết định tính cái nào trước.
+	- Chi phí cao.
+-> Lazy for conditional, eager for rest
+----------------------------------------------------------------------------------
+Short-Circuit:
+(a==b)||(b/a>2)
+- Phép toán and, or.
+- Nếu 1 cái đúng -> done. (or)
+- short and non short-circuit.
+----------------------------------------------------------------------------------
+2. Statments: cơ chế phát biểu.
+Đơn vị văn phạm.
+	- Ko trả về giá trị.
+	- Thay đổi trạng thái hệ thống.
+VD:
+a=5;
+print "pi"
+begin...end
+--------------------------------------
+Assignment Statements:
+leftExpr AssignOperator rightExpr
+VD:
+a	:=	b;
+address		value
+C: assStmt is expr: while(ch=getchar()) -> trả về giá trị.
+Phép gán + phép toán: +=, -=, ++, --
+--------------------------------------------------------------
+Cấu trúc điều khiển: Control Structures
+Control statements:
+	- Lựa chọn các nhánh điều khiển khác nhau.
+	- Thực thi 1 nhánh nhiều lần.
+-Control stmt and collection control stmt.
+--------------------------------------------------------------
+Two-way Selection
+if control_express
+	then clause
+	else clause
+*Dangling else:
+if(sum==0)
+	if(count==0)
+		result=0;
+	else
+		result=1;
+Ko biết else là if nào ?
+- Else gần if nào.
+- Block.
+- Python
+- EndIf.
+----------------------------------------------------------------
+Multiple-Selection
+- Lựa chọn 1 trong nhiều stmt.
+- Vấn đề:
+	- Kiểu expr: if-> true/false.
+	- được chọn ?
+	- 1 hay nhiều nhánh exe ?
+	- Mỗi TH đặc tả.
+	- Ko thuộc nhánh nào.
+switch(index){
+	case 1: //Extract value
+	case 2:
+		//stmt sequences
+		//block
+	ko break -> multiple selection
+	default:
+	//unpresent value
+}
+--------------------------------------------------------------------
+Iterative Stmt.
+- Thực thi 1 stmt nhiều lần.
+- Phải có:
+	- Biến đếm.
+	- Giá trị bắt đầu/ kết thúc.
+	- Bước tăng.
+Nếu trong body change stepsize -> thay đổi
+for expr_1; expr_2; expr_3
+	loop body
+expr_1
+loop:
+if expr_2=0 goto out
+[loop body]
+expr_3
+goto loop
+out:....
+-----------------------------------------------------------------------
+Logical Controlled Loops.
+- Dựa trên biểu thức luận lý -> lặp
+- pretest/posttest: kiểm tra biểu thức luận lý trước hay sau khi lặp.
+while(ctrl_expr)
+	loop body
+
+loop:
+if ctlr_expr is false
+goto out
+[loop body]
+goto loop
+out:
+....
+
+do
+	loop body
+while(ctlr_expr)
+
+loop:
+[loop body]
+if ctlr expr goto loop
+
+break/continue.
+-------------------------------------------------------------------------
+Iteration Based on Data Structures
+- Dựa trên CTDL
+Dùng iterator: được gọi mỗi vòng lặp -> trả về phần tử.
+Pre-defined or user-defined iterator
+VD:
+foreach(String name in strList){}
+--------------------------------------------------------------------------
+Unconditional Braching
+- Nhảy ko điều kiện: goto.
+- Khó đọc, bảo trì
+- Structured programing: no goto.
+- Java, Python, Ruby: say no

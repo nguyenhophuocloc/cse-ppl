@@ -1,0 +1,10 @@
+
+            Function foo()
+            {
+                Let ##This 
+                is 
+                a 
+                line 
+                comment## a;
+            }
+        

@@ -1,0 +1,1 @@
+Program([VarDecl(Id(x),NumberType,NumberLiteral(10.0)),VarDecl(Id(y),NumberType),FuncDecl(Id(foo)[VarDecl(Id(x),NoneType)],[Assign(Id(x),BooleanLiteral(true)),If(Id(x),[Assign(Id(x),NumberLiteral(10.0))])])])

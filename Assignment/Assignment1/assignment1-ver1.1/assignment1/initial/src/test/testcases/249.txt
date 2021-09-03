@@ -1,0 +1,6 @@
+
+            Function foo()
+            {
+                Call(println,[Call(println,[Call(println,[zyasdad])])]);
+            }
+        

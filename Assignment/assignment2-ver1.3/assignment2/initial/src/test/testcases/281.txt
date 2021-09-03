@@ -1,0 +1,8 @@
+
+            Function foo()
+            {
+                Let x, y;
+                x = 1 / True +. "123";
+                y = 7.8 % 0;
+            }
+        

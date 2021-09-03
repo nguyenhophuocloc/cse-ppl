@@ -1,0 +1,6 @@
+
+            Function foo()
+            {
+                x = Call(func,[239, "abc",);
+            }
+        

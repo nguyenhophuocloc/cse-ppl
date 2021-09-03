@@ -1,0 +1,1 @@
+Let,day,,,month,,,year,;,Function,main,(,),{,If,(,day,==,22,),{,Return,True,},},<EOF>

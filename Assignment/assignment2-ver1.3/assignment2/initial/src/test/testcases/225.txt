@@ -1,0 +1,11 @@
+
+            Function foo(){
+                Let a = {
+                    name: "Yanxi Place",
+                    address: "Chinese Forbidden City"
+                    };
+                For key In a {
+                    Call(printLn, ["Value of " + key + ": " + a{key}]);
+                }
+            }
+        

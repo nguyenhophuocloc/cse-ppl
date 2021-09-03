@@ -1,0 +1,50 @@
+Một đối tượng biến kiểu B ko chứa đối tượng kiểu A
+A x;	
+B y;	y ko chứa đối tượng kiểu A
+def(x,y,z)=x(z(y))
+
+-> * -> ->
+đặt biến kiểu: x=T1
+((T1->T2)*T3*(T3->T1))->T2
+
+	      
+---------------------------------------
+def F(t,x,y) = if E(x) then 0 else t(x,y)
+def G(m,n) =n(m)
+F(G(m,n),z,U)
+
+type E,F,G?
+E(x): boolean
+0: integer -> G trả về integer
+z và U là T1 và T2
+T2: integer
+
+E(x): boolean->boolean
+
+t: integer
+z: T1
+U: T2
+E:
+T1->boolean
+F:
+((( * )-> )*T1 *T2 )->integer
+G:
+n: kiểu integer
+G:
+(m*(m->integer))->integer
+G:
+T1*(T1->T2)->T2
+F:
+(T1*(T1->T2)->T2)*(T1)*T2)->intger
+E:
+8T1->boolean
+
+
+
+F
+G:
+(T1X(T1->integer))->inetger
+T2: T1->integer
+E: T1->boolean
+F:
+((T1x(T1->integer))->integer)xT1x(T1->integer))->integer

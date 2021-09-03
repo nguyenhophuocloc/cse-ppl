@@ -1,0 +1,9 @@
+
+            Function foo()
+            {
+                If (True)
+                {Continue;}
+                Else {Continue;
+                }
+            }
+        

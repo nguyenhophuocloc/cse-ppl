@@ -1,0 +1,9 @@
+
+            Function foo()
+            {
+                Continue;
+                Continue;
+                Continue;
+                Continue;
+            }
+        

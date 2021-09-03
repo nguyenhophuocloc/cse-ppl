@@ -1,0 +1,9 @@
+sign exponet    fraction
+x    xxx        xxxxx
+4.3=100.01001100110
+1.0001001100110 *2^2
+->fraction: 00010
+->sign:0
+2+3=5->101
+1 101 00010
+fixed lenght: toidi hoc

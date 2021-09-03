@@ -1,0 +1,54 @@
+Gọi subpro: 6 cách.
+Ngoại trừ simple call thì có hết.
+Biến cố:
+- Raise:
+raise <Exception> <= derived from Exception
+assert <condition>(, <error message>)?
+=> nếu false: ném ra message
+- Handing:
+try:
+	<stmt-list>
+(except (<Exception> (as ID)?)?:
+	<stmt-list>+)	nếu bắt thì thực thi
+(else:
+	<stmt-list>?)	nếu ko bắt được
+(finally:
+	<stmt-list>?)	luôn luôn thực thi( trước cả try - except con)
+------------------------------------------------------------------------
+Finally block:
+- ưu tiên hơn cả breal, continue, return.
+- return finally trước return try
+-------------------------------------------------
+Coroutines:
+Generator: giống func nhưng dùng yield
+def gen():
+	yield 1
+	yield 2
+	yield 3
+x= gen() //ko thực thi, ghi nhận trỏ đến
+next(x) -> chạy ở lệnh next => kết quả 1
+next(x) =2 
+next(x)=3
+=3
+- dùng comprehension
+gen = (i for i in range(1,4))
+- VD: đọc file rất lớn: tràn bộ nhớ: đọc 1 hàng, trả về 1 hàng
+hết thì có thể đè lên, ko tràn bộ nhớ, lần sau đọc tiếp.
+---------------------------------------------------------
+Scheduled Subpro:
+- ko chạy liền, dựa vào time, priority
+import schedule
+import time
+def job():
+	print(..)
+	schedule.every(10).minutes.do(job) #đăng ký
+while True:
+	schedule.run_pending() => chạy
+----------------------------------------------------------
+Tasks:
+có 2 modules
+threading and multiprocessing
+threading.Thread(target=<func>) or multiprocessing.Process(targe=<func>)
+=> đăng ký thread
+start() => call <function> run on another thread or process
+join() => wait for <func> stop thì làm gì tiếp theo....

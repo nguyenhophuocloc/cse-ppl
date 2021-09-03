@@ -1,0 +1,630 @@
+JVM
+Our Compiler
+Src code->SCANNER
+->Squence of tokens->PARSER
+->Ast->SEMANTIC ANYLYZER
+->Ast->CODEGEN\
+->JasminCode->JAVA BYTE CODE ASSEMBLER
+->Java Byte code->JVM
+-------------------------------------------
+Jasmin is Java assembler.
+-------------------------------------------
+Java->Java bytecode->running->Máy ảo (win,linux)
+--------------------------------
+JVM=stack-based
+- Lấy giá trị từ stack tính toán.
+
+Kiến trúc JVM
+class file -> Class loader subsystem->các vùng stack
+Các vùng:
+- method area: class data
+- Heap: obj
+- Java stack: nhiều stack, mỗi stack có các thread (chạy song song)
+	mỗi thread có stack frame
+	có bảng ghi hoạt động.
+	có bảng pc registers (ghi vào các thanh ghi)
+	có native method stacks: method Ko phải viết bằng javabyte code
+		viết bằng native code.
+-------------------------------------------------------------------
+Data types
+Ký hiệu -> mã Jasmin
+boolean		Z
+byte		B
+short		S
+int		I
+long		L
+char		C
+float		F
+double		D
+---------------------------------------------------------------
+returnAddress
+class reference		Lclass-name;
+interface reference	Linter-name;
+array ref		[[..[component-type;
+void			V
+-----------------------------------------------------------
+*java/lang là package, tham khảo đối tượng thêm "L", Obj là class
+"[": mảng 1 chiều, kiểu phần tử
+Object			Ljava/lang/Object;
+String			Ljava/lang/String;
+String[]		[Ljava/lang/String;
+int[]			[I
+float[][]		[[F
+--------------------------------------------------------------------
+*Hàm: kiểu tham số "()", ko cách nhau, kiểu trả về
+void main(String[] args)	([Ljava/lang/String;)V
+int gcd(int a, int b)		(II)I
+char foo(float a, Object b)	(FLjava/lang/Object;)C
+-----------------------------------------------------------------------
+Code java:
+dùng getClass()
+VD:
+int a;
+a.getClass()	->I
+----------------------------------------------------------------------
+boolean,byte,char and short như là int
+iconst for all
+----------------------------------------------------------------------
+Operand stack
+- Khi thực thi tạo ra 1 stack.
+	+Lưu trữ, nhận.
+	+Pop, push
+VD:
+a=b*2+40;
+iload_2		//đem biến thứ 2 (b) lên đỉnh stack
+iconst_2	//đem const 2 lên đỉnh stack
+imul		//pop cả 2 giá trị rồi nhân, sau đó tiếp tục onto stack
+bipush 40	//đem 40 onto
+iadd		//pop 2 value, and add -> ontostack
+istore_1	//pop value on top -> assign vào biến 1
+-----------------------------------------------------------
+Dãy biến cục bộ
+Local Varible Array
+- Cấp phát cho các dữ liệu cục bộ (chương trình con) (stack frame)
+-> Khi chương trình con được gọi -> stack frame, trong đó có
+local variable array.
+*Instance method: public void...
+0: this
+*Class method: public static ....
+0->....
+- Cấp 1 phát 1 slot: boolean, byte, char, short, int, float, reference
+and returnAddress
+- 2 slot: long/double.
+VD:
+public static void foo() {
+	int a,b,c;
+	a = 1;
+	b = 2;
+	c = (a + b) * 3;
+}
+static: a là 0,b 1, c 2
+.line 7:
+	iconst_1	//lấy biến số 1 đẩy lên stack
+	istore_0	//chỉ số 0 được dùng cho biến a
+.line8:
+	iconst_2
+	istore_1
+.line9:
+	iload_0
+	iload_1
+	iadd
+	iconst_3		//đem SỐ 3
+	imul
+	istore_2
+VD:
+public void foo() {
+	int a,b,c;
+	a = 1;	//1
+	b = 2;	//2
+	c = (a + b) * 3;	//3
+}
+Instance: a là 1..., 0 dùng cho this rồi
+.var ) is this LVD2; from Label 0 to Label1
+.line 7:
+	iconst_1	//lấy biến số 1 đẩy lên stack
+	istore_1	//chỉ số 1 được dùng cho biến a
+.line8:
+	iconst_2
+	istore_2
+.line9:
+	iload_1
+	iload_2
+	iadd
+	iconst_3		//đem SỐ 3
+	imul
+	istore_3
+VD:
+public void foo() {
+	int a = 1;	//1
+	long b = 2;	//2,3
+	int c = 3;	//4
+	long d = (a + b) * c;	//5,6
+}
+.line6:
+	iconst_1
+	istore_1
+.line7
+	ldc2_w 2
+	lstore_2
+.line8:
+	iconst_3
+	istore_4
+.line9:
+	iload_1
+	i2l		//a->long
+	lload_2
+	ladd
+	iload_4
+	i2l
+	lmul
+	lstore_5
+VD:
+instance
+void foo(int a, float b) {
+
+     double c;
+
+    if (...) {int d; ...} else {int e;...}
+
+}
+a//1,b//1,c//3
+d//5 hoặc e//5 (dòng if chỉ cấp phát 1 trong 2)
+-----------------------------------------------------------------------------
+**Instuctions
+Các tập lệnh máy ảo java
+(7 nhánh đầu)
+1. Arithmetic (số học)
+Add: i/f/l/dadd
+Sub: i/f/l/dsub
+Mul: i/f/l/dmul
+Div: i/f/d/ldiv
+Rem( lấy số nguyên): i/l/f/drem
+Negate (lấy số âm): i/l/f/dneg
+Shift: ishl, ishr, iushr, lshl, lshr, lushr
+OR: i/lor
+AND: i/land
+XOR: i/lxor
+Local varibale increment: iinc
+Comparision: dcmpg, dcmpl, fcmpg, fcmpl, lcmp
+(d/f/l compare, greater/less)
+--------------------------------
+2. Load and Store
+**Đưa biến lên stack
+*Nạp dữ liệu lên stack
+<n>: 5: đọc từ biến cục bộ 5 -> stack
+<n>: 0-3: lệnh 1 byte, nếu n>3 -> lệnh 2byte
+iload, iload_<n>	int
+lload, lload_<n>	long
+fload, fload_<n>	float
+dload, dload_<n>	double
+aload, aload_<n>	reference
+Taload ->T:b,s,i,l,f,d,c,a: đọc phần tử dãy
+***Chỉ dùng gạch khi <=3
+-----------------------------
+*Store:
+istore, istore_<n>	int
+lstore, lstore_<n>	long
+fstore, fstore_<n>	float
+dstore, dstore_<n>	double
+astore, astore_<n>	reference
+Tastore
+**Đưa hằng lên stack:
+bipush		integer -2^7->2^7-1	lệnh 2byte (128)
+sipush			-2^15->2^15-1	lệnh 4byte (32767)
+ldc		hằng dài hơn nữa @@ integer, float quoted string 4byte
+ldc_w		dài 			/*Nếu dùng .point thì ldc 4.0)*/
+ldc2_w
+aconst_null	địa chỉ null
+iconst_m1	-1
+iconst_<i>	0..5
+lconst_<l>	0,1
+fconst_<f>	0.0,1.0,2.0
+dconst_<d>	0.0,1.0
+VD:
+int a=1;	//1
+int b=100;	//2
+int c=1000;	//3
+int d=40000;	//4
+int e=a*b+c-d;	//5
+Solution:
+.line6:
+	iconst_1
+	istore_1
+.line7:
+	bipush 100
+	istore_2
+.line8:
+	sipush 1000
+	istore_3
+.line9:
+	ldc 40000
+	istore 4
+.line10
+	iload_1
+	iload_2
+	imul
+	iload_3
+	iadd
+	iload 4
+	imul
+	istore 5
+VD:
+float a = 1.0F ;
+float b = 2.0F;
+float c = 3.0F;
+float d = 4.0F;
+float e = a * b + c - d;
+.line6:
+	fconst_1
+	fstore_1
+.line7:
+	fconst_2
+	fstore_2
+.line8:
+	ldc 3.0
+	fstore_3
+.line9:
+	ldc 4.0
+	fstore 4
+.line10
+	fload_1
+	fload_2
+	fmul
+	fload_3
+	fadd
+	fload 4
+	fsub
+	fstore 5
+VD: mảng
+a[0]=100;
+b=a[1];
+.line8:
+	aload_0		//push chỉ số của biến a
+	iconst_0	//hàm 0 index
+	bipush 100	//đưa giá trị muốn push
+	iastore		//a[0]=100 (Tastore) lấy 100 bỏ vào index 0 dãy a
+.line9:
+	aload_0		//nạp địa chỉ a
+	iconst_1	//nạp index
+	iaload		//fushion 2 cái trên, a và 1 -> a[1]
+	istore_1	//lưu vào b
+=> gặp mảng thì làm mảng trước
+-----------------------------------------------------------------------------
+3. Control Transfer Instructions
+- Ko điều kiện
+goto, goto_w, jsr, jsr_w, ret
+- Có điều kiện
+ifeq, iflt, ifle, ifne, ifgt, ifge	->compare an interger to zero
+ifnull, ifnonnull			->compare a ref to null
+if_icmpeq, if_icmpne, if_icmplt, if_icmpgt, if_icmple,
+if_icmpge				-> compare 2 integer
+if_acmpeq, if_acmpne			-> compare 2 ref
+-> pop các giá trị và so sánh.
+- Compund conditional branch
+tableswitch, lookupswitch
+---------------------------------------------------------------------------
+VD:	a//2, b//3
+a[10] = b[3] * 4
+	aload_2
+	bipush 10
+	aload_3
+	iconst_3
+	iaload
+	iconst_4
+	imul
+	iastore
+VD:	a//1, b//2
+if (a < 10) then b = 100; else b = 1000;
+	iload_1
+	bipush 10
+	if_icmpge Label0	/*ngược lt ->ge*/
+	bipush 100
+	istore_2
+	goto Label1
+	Label0:
+	sipush 1000
+	istore_2
+	Label1:
+Luồng: Nếu điều kiện đúng thì sẽ phải chạy vào label đó :((, tinh tế time
+-> phải làm điều kiện if ngược lại để mà nó theo luồng chạy vào đúng, 
+hoặc bay hẳn vào sai rồi đi tiếp
+---------------------------------------------------------------------------
+fcmpg or fcmpl
+Với só thực, dùng chung @@
+if value1>value2	1
+	==		0
+	<		-1
+Khác chỗ này nè: Nếu ko phải là số: fcmpg ->1
+		   		    fcmpl ->-1
+VD:
+float a,b; int c;
+if(a>b)		->fcmpl với fcmpg đéo khác gì nhau, cái quan trọng
+  c=1;		  là muốn bắt được sai (với cái đúng là 1 thì sai 0<=, ifle Label0), ifge, ifle
+else
+  c=2;
+.line7
+	fload_0		//push a
+	fload_1		//push b
+	fcmpl		//pop a,b, push 1 if a>b, 0 othewise ->on stack
+	ifle Label0	// top <=0 gotoLabel0
+.line8
+	iconst_1
+	istore_2
+	goto Label1
+	Label0:
+.line10
+	iconst_2
+	istore_2
+	Label1:
+VD:
+int foo(float a) { int c; if (a < 10.0f) c = 22; else c = 400; return c;}
+	fload_1
+	ldc 10.0
+	fcmpl (fcmpg) (cái đúng là -1 -> bắt lớn hơn hoặc bằng 0)
+	ifge Label0
+	bipush 22
+	istore_2
+	goto Label1
+	Label0		//má, bkel đéo có luôn
+	sipush 400
+	istore_2
+	Label1:
+---------------------------------------------------------------------
+Obj Creation and Manipulation
+- Create a new class instance: new
+- new array: newarray, anewarray, multianewarray (nhiều chiều)
+- Truy cập fields của class: getfield, putfield, getstatic, putstatic
+(instance vs static flield)
+- Load an array: Taload
+- Store: Tastore
+VD:
+BKOOL:
+a: integer[10];
+a[0]=a[1]+2;
+Java:
+int a[]=new int[10];
+a[0]=a[1]+2;
+.line6:
+	bipush 10	//index
+	newarray int	//tạo dãy 10 phần tử có địa chỉ on top stack
+	astore_0	//địa chỉ vào phần tử 0
+.line7:
+	aload_0		//1
+	iconst_0	//2
+	aload_0
+	iconst_1		//all: 3
+	iaload
+	iconst_2
+	iadd
+	iastore
+*Field Instruction:
+getstatic
+putstatic	+<field_spec> <descriptor>
+getfield
+putfield
+VD;
+getstatic java.lang.System.out Ljava/io/PrintStream;
+	  class name       field field
+			   name  type
+VD:
+public class VD12 {
+	static int a;	//field static
+	int b;		//instance field
+	static VD12 c;	//static field class
+	VD12 d;		/instance field class
+	public static void
+		main(String[] arg) {
+		VD12 e;
+		e = new VD12();	//bắt đầu ở đây
+		a = 1;
+		e.b = a + 1;	//lấy field b của a
+		e.d = new VD12();
+		c = e.d;
+	}
+}
+hàm static: 0: this, 1->e
+Solution:
+	new VD12	//tạo VD12 trong heap, trả về địa chỉ
+	dup		//nhân đôi giá trị on stack
+	invokespecial VD12/<init>()V		//hàm constructor
+						//lấy đi 1 địa chỉ trên đỉnh
+	astore_1	//lấy địa chỉ và cấp vào e
+
+	iconst_1
+	putstatic VD12.a I	//đem vào a, VD12.a truy cập, I là kiểu
+	
+	aload_1		//lấy địa chỉ VD12, đưa e lên trước
+	getstatic VD12.a I	//đọc a
+	iconst_1
+	iadd
+	putfield VD12.b I	//put vào, lấy 2 giá trị, con trỏ và value
+	
+	aload_1
+	new VD12
+	dup
+	invokespecial VD12/<init>()V	//con trỏ đến e, đối tượng VD12
+	putfield VD12.d LVD12
+	aload_1
+	
+	aload_1
+	getfield VD12.d LVD12
+	putstatic VD12.c LVD12
+Nếu mà chưa có thì làm từ bên phải qua
+---------------------------------------------------------------------------------
+Method Invocation Instructions
+invokestatic
+invokevirtual		<method-spec>
+invokespecial
+
+- gọi phương thức tĩnh class
+- phương thức instace
+- phương thức cha, constuctor
+
+invokeinterface <method-spec> <num-args>
+VD:
+invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+	      class name	  method	type
+				  name
+- invokestatic Hàm lấy hết thông số, trả về kết quả on stack
+argn
+..
+arg1
+- invokevirtual/invokespecial: ngoài thông số còn cần đối tượng
+argn
+...
+obj
+VD:
+public class VD13 {
+  public static void main(String[] arg) {
+	goo(new VD13());
+  }
+  float foo(int a, float b) {
+	return a + b;
+  }
+  static void goo(VD13 x){
+	x.foo(1,2.3F);
+  }
+}
+Hàm main gọi hàm goo
+.method public static main([Ljava/lang/String;)V
+.limit stack 2 (tối đa 2 ô)
+.limit locals 1 (1 biến cục bộ)
+.var 0 is arg0 [Ljava/lang/String; from Label0 to Label1
+
+.line 3
+	new VD13
+	dup
+	invokespecial VD13/<init>()V
+	invokestatic VD13/goo(LVD13;)V	//lấy thông số đang có ra
+
+.line4
+	return
+
+.end method
+
+Hàm goo:
+.method static goo(LVD13;)V
+.limit stack 3
+.limit local 1
+.var 0 is arg0 LVD13; from Label0 to Label1
+
+.line9
+	aload_0		//đưa địa chỉ x lên đỉnh stack
+	iconst_1	//args
+	ldc 2.3		/args
+	invokevirtual VD13/foo(IF)F
+	pop		//vì ko dùng
+Label1:
+.line10
+	return	//để bỏ hết mới đạt y/c
+.end method
+-----------------------------------------------------------------
+Method Return
+return 	->void
+ireturn ->int, char,short, boolean, byte
+freturn -> float
+lreturn ->long
+dreturn ->double
+areturn ->reference
+Lấy 1 giá trị ra và return về
+VD:
+float foo(int a, float b) {
+	return a + b;
+}
+
+.method foo(IF)F
+.limit stack 2
+.limit local 3
+.var 0 is this LVD13; from Label0 to Label1
+.var 1 is arg- I from Label0 to Label1
+
+Label0:
+	iload_1
+	i2f
+	fload_2
+	fadd
+Label1:
+	freturn
+.end method
+-----------------------------------------------------------------------------
+Jasmin Directives
+Chỉ dẫn sinh mã
+.source <source.java>		tên file java
+.class <the current class>	tên class
+.super <the super class>	tên super class hiện tại
+.limit				stack, local
+.method <the method description>
+.field <the field description>
+.end				kết thúc
+.var <the variable description>	mô tả biến
+.line <the line number in source code>	biến line nào
+VD:
+public class VD14 {
+  int a;	//instace
+  static int b;	//static
+  public static void
+	main(String[] arg) {
+	(new VD14()).foo(1,2.3F);
+  }
+  float foo(int a, float b) {
+	return a * b;
+  }
+}
+
+.source VD14.java
+.class public VD14
+.super java/lang/Object 	(nếu ko khai báo thì cha là object)
+
+.field a I
+.filed static b I
+
+Ko khai báo: constuctor default
+
+.method public <init>()V
+.limit stack 1
+.limit locals 1
+.var 0 is this LVD14; from Label0 to Label1
+
+Label0:
+.line1
+	aload_0
+	invokespecial java/langObject/<init>()V
+Label1:
+	return
+.end method
+	
+static void main:
+.method public static main([Ljava/lang/String;)V
+.limit stack 3
+.limit locals 1
+.var 0 is arg0 [Ljava/lang/String; from Label0 to Label1
+Label0:
+.line 5
+	new VD14
+	dup
+	invokespecial VD14/<init>()V
+	iconst_1
+	ldc 2.3
+	invokevirtual VD14/foo(IF)F
+	pop
+Label1:
+.line 6
+	return
+.end method
+
+foo:
+.method foo(IF)F
+.limit stack 2
+.limit locals 3
+.var 0 is this LVD14; from Label0 to Label1
+.var 1 is arg0 I from Label0 to Label1
+.var 2 is arg1 F from Label0 to Label1
+Label0:
+.line 8
+	iload_1
+	i2f
+	fload_2
+	fmul
+Label1:
+	freturn
+end method

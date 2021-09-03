@@ -1,0 +1,56 @@
+Biểu thức:
+Độ ưu tiên, kết hợp.
+----------------------------
+None-ass:
+x op y-> OK
+x op y op z -> wrong
+Nhưng python:
+x<y<z -> x<y and y<z ->OK
+----------------------------
+IfStmt
+<exp1> if <exp2> else <exp3>
+=
+if<exp2>: return <exp1>
+else: return <exp3>
+->Tính exp2 trước rồi lựa exp1 hoặc exp3
+VD:
+y=3 if x>1 else 4
+More:
+<exp1> if <exp2> else <exp3> if <exp5> else <exp6>
+[<exp1> if <exp2> else <exp3>] if <exp5> else <exp6> ?
+<exp1> if <exp2> else [<exp3> if <exp5> else <exp6>] ? -> cái này đúng
+return 1 if 3<2 else 2 if 3>2 else 6
+xét: 3<2: sai -> block sau: 3>2 đúng ->2
+return 1 if 3>2 else 2 if 3>2 else 6
+ra 1
+----------------------------------------------------------------------
+Thứ tự tính toán:
+- Trái->phải (**toán hạng)
+VD:
+a+b: tính a, tính b -> +
+exp1 + exp2 *(exp3-exp4); 1->2->3->4
+- >> * >> +
+- Short-circuit: and, or (trái...)
+- Method vs Operator:
+obj1.__add__(obj2) ~~~ obj1+obj2
+->Operator cho class như C++.
+----------------------------------------------------------------------
+Statement
+For stmt
+For(Biến in exprssion)
+Iterable: method __iter__(self) -> iterator
+Iterator: method __next__(self) -> trả và item hoặc raise StopIteration
+for <var> in <expression>:
+	<stmt_list>
+else:	//thêm khi out for thực hiện thêm 1 cái else =))
+	<stmt_list>
+<exp>-> trả về đối tượng iterable.
+
+<tmp> = iter(<expression>)
+while True:
+ try:
+	<var> = next(<tmp>)
+	<stmt_list>
+ except StopIteration:
+	break
+

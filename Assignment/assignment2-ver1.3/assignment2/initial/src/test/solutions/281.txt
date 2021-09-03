@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[[VarDecl(variable=Id(name='x'), varDimen=None, typ=NoneType(), varInit=None), VarDecl(variable=Id(name='y'), varDimen=None, typ=NoneType(), varInit=None)],Assign(Id(x),BinaryOp(+.,BinaryOp(/,NumberLiteral(1.0),BooleanLiteral(true)),StringLiteral(123))),Assign(Id(y),BinaryOp(%,NumberLiteral(7.8),NumberLiteral(0.0)))])])

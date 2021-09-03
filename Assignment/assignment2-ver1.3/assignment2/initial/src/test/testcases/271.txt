@@ -1,0 +1,8 @@
+
+            Function foo()
+            {
+                While(1){
+                    Continue;
+                }
+            }
+        

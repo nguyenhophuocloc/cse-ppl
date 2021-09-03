@@ -1,0 +1,15 @@
+
+           Function foo(x,y){   
+                x=5;
+                y=6;
+                If(x>y){
+                    Let z;
+                    z=7;
+                }
+                Elif(True){
+                    x=7;
+                }
+                
+                
+            }
+        

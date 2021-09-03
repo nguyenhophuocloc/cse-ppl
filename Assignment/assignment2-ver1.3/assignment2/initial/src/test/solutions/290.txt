@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[Assign(Id(x),ArrayAccess(Id(a),[ArrayAccess(Id(b),[ArrayAccess(Id(c),[ArrayAccess(Id(d),[ArrayAccess(Id(e),[ArrayAccess(Id(f),[ArrayAccess(Id(g),[ArrayAccess(Id(h),[NumberLiteral(0.0)])])])])])])])]))])])

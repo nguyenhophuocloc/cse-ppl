@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[If(BooleanLiteral(false),[CallStmt(Id(str_to_float),[StringLiteral(abc)])])ElseIf(BooleanLiteral(true),[Assign(Id(z),StringLiteral(xyz))])])])

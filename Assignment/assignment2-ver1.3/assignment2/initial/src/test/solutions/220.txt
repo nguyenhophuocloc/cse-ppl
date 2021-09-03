@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],[[VarDecl(variable=Id(name='x'), varDimen=None, typ=NoneType(), varInit=None), VarDecl(variable=Id(name='y'), varDimen=None, typ=NoneType(), varInit=None)],[VarDecl(variable=Id(name='z'), varDimen=[NumberLiteral(value=123.0)], typ=NoneType(), varInit=None)]])])

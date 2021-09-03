@@ -1,0 +1,39 @@
+a)
+O
+A(O)	A,O
+B(O)	B,O
+C(O)	C,O
+D(A,B)
+D + ([A,O],[B,O],[A,B])
+A + [O][B,O][B]
+=>
+D,A,B,O
+
+E(C,A)
+E + [C,O][A,O][C,A]
+C [O][A,O][A]
+E,C,A,O
+
+F(D,B,E)
+F
+[D,A,B,O], [B,O], [E,C,A,O] , [D,B,E]
+[A,B,O], [B,O], [E,C,A,O] , [B,E]
+D, -> ERROR
+CHANGE:
+F(D,E,B)
+F [D,A,B,O] , [ E,C,A,O] , [B,O] , [D,E,B]
+D, [A,B,O] , [ E,C,A,O] , [B,O] , [E,B]
+D,E [A,B,O] , [ C,A,O] , [B,O] , [B]
+D,E,C [A,B,O] , [ A,O] , [B,O] , [B]
+D,E,C,A   [B,O] , [ O] , [B,O] , [B]
+ANS:
+F,D,E,C,A,B,O
+b)
+use C.foo
+
+
+A là lớp cha, X là lớp con ràng buộc tĩnh
+X x = new A() -> error
+x là con A -> có all method A, và có thể định nghĩa thêm (def val....)
+-> ko khai báo bằng A được vì thiếu
+Scala ngược python

@@ -1,0 +1,6 @@
+
+            Function foo()
+            {
+                x[23] = a[123 - a[67] * "abc" || 1.e45] + "sdsd";
+            }
+        

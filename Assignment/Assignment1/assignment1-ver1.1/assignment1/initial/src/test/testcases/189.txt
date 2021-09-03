@@ -1,0 +1,1 @@
+ Var: day,month,year; Function main& Body: If(day == 22) Return True EndBody.

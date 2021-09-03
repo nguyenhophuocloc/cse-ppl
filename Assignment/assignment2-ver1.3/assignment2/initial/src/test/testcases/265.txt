@@ -1,0 +1,9 @@
+
+            Function foo()
+            {
+                While (True) {
+                    If (True && "abc") { Return;
+                    }
+                }
+            }
+        

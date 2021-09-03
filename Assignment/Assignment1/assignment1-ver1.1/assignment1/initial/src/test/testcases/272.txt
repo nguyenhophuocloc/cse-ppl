@@ -1,0 +1,14 @@
+
+            Function foo()
+            {
+                If(a<5)
+                {
+                    While(0)
+                    {                    
+                        While (nothing) 
+                        {
+
+                        }                    
+                }
+            }
+        

@@ -1,0 +1,7 @@
+
+            Function foo()
+            {
+                Let a[12] = [];
+                Return a;
+            }
+        

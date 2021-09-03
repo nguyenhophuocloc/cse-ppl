@@ -1,0 +1,7 @@
+
+            Let foo = True;
+
+            Function foo()
+            {
+            }
+        
