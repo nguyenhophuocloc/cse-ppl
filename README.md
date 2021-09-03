@@ -5,6 +5,8 @@ Lý thuyết + hướng dẫn sử dụng python và antlr.8 <br/>
 Tổng hợp quiz + ProgramingCode môn PPL<br/>
 Assignment: Python + antlr4.8<br/>
 - Language is implemented: CSEL
-
+- Assignment1: Lexer+Parser
+- Assignment2: AST
+- Assignment3: Type
 
 
