@@ -1,6 +1,6 @@
 # Principles of Programming Language - HCMUT
 <h2>Môn Nguyên lý ngôn ngữ lập trình Trường Đại học Bách Khoa HCM. </h2>
-<a href="https://github.com/phuocloc14/cse-ppl">Lý thuyết + hướng dẫn sử dụng python và antlr.8 </a>
+<a href="https://github.com/phuocloc14/cse-ppl">Lý thuyết môn học + hướng dẫn sử dụng python và antlr.8 </a>
 <br/>
 <a href="https://github.com/phuocloc14/cse-ppl/tree/master/Lab%2BExercise">Tổng hợp quiz + ProgramingCode môn PPL</a>
 <br/>
