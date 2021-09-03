@@ -2,5 +2,5 @@
 1. Cài đặt Python 3
 2. Download và cài đặt Java Runtime Environment
 3. Download file antlr phiên bản 4.8 thiết lập biến môi trường ANTLR_JAR dẫn đến đường dẫn của file này (vì vậy, nên lưu trữ file này ở một vị trí cố định nằm ngoài project, không thay đổi, không xóa file).
-4. Cài đặt  antlr4-python3-runtime (phiên bản 4.8). Xem chi tiết tại đây. Sử dụng lệnh pip install antlr4-python3-runtime==4.8
+4. Cài đặt  antlr4-python3-runtime (phiên bản 4.8). Sau đó sử dụng lệnh pip install antlr4-python3-runtime==4.8
 5. Đọc tiếp file README trong project và làm tiếp theo hướng dẫn để biết project mình có thiết lập thành công chưa?
